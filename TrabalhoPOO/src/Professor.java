@@ -1,8 +1,12 @@
+import java.util.ArrayList;
+
 public class Professor {
     private String nome;
     private int id;
+    private String login;
+    private String senha;
     private String formacao;
-    private String turmas;
+    private ArrayList<Turma> turmas;
 
     public String getNome() {
         return nome;
@@ -20,6 +24,22 @@ public class Professor {
         this.id = id;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getFormacao() {
         return formacao;
     }
@@ -28,5 +48,11 @@ public class Professor {
         this.formacao = formacao;
     }
 
+    public ArrayList<Turma> getTurmas() {
+        return turmas;
+    }
 
+    public void setTurmas(ArrayList<Turma> turmas) {
+        this.turmas = turmas;
+    }
 }
