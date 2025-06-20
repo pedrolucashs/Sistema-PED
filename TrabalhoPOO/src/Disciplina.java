@@ -1,9 +1,15 @@
 public class Identificacao{
+    private String unidade;
+    private String[] cursos;
+    private String estruturaC;
     private String nome;
     private int codigo;
     private int cargaHoraria;
     private String carater;
     private String regimeOferta;
+    private String[] preRequisitos;
+    private String[] coRequisitos;
+    private String[] equivalencias;
 
     public String getNome() {
         return nome;
