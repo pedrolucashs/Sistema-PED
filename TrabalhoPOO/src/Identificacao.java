@@ -1,4 +1,4 @@
-public class Identificacao extends PlanoDeEnsino{
+public class Identificacao {
     private String unidade;
     private String[] cursos;
     private String estruturaC;
