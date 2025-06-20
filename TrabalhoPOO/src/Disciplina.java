@@ -1,4 +1,4 @@
-public class Disciplina {
+public class Identificacao{
     private String nome;
     private int codigo;
     private int cargaHoraria;
