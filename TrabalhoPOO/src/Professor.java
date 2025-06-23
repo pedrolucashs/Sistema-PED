@@ -6,7 +6,7 @@ public class Professor {
     private String login;
     private String senha;
     private String formacao;
-    private ArrayList<Turma> turmas;
+    private String turmas;
 
     public String getNome() {
         return nome;

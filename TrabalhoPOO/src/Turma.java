@@ -1,29 +1,20 @@
-public class Turma {
-    private Disciplina disciplina;
-    private int codigo;
-    private String horario;
+public class Turma{
+  private PlanoDeEnsino ped;
+  private int codigoTurma;
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
+  public PlanoDeEnsino getPED(){
+    return ped;
+  }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
+  public void setPED(PlanoDeEnsino ped){
+    this.ped = ped;
+  }
 
-    public int getCodigo() {
-        return codigo;
-    }
+  public int getCodigoTurma(){
+    return codigoTurma;
+  }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
+  public void setCodigoTurma(){
+    this.codigoTurma = codigoTurma;
+  }
 }
