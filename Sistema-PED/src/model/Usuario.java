@@ -3,16 +3,28 @@ package model;
 public class Usuario {
     private String nome;
     private String login;
+    private String id;
     private String senha;
 
     public Usuario(){
         super();
     }
 
-    public Usuario(String nome, String login, String senha){
+    public Usuario(String nome, String login, String id, String senha){
         setNome(nome);
         setLogin(login);
+        setId(id);
         setSenha(senha);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        if (id != null) {
+            this.id = id;
+        }
     }
 
     public String getNome() {

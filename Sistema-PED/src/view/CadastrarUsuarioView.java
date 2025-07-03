@@ -49,9 +49,7 @@ public class CadastrarUsuarioView implements Observer {
         return senha;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
     public void update() {
 

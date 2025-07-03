@@ -67,9 +67,9 @@ public class Model {
     /*
      * Adiciona um usuário no mapeamento
      */
-    public void setUsuario(String nome, String login, String senha) {
+    public void setUsuario(String nome, String login, String id, String senha) {
         if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Usuario(nome, login, senha));
+            usuarios.put(login, new Usuario(nome, login, id, senha));
             notifica();
         }
     }
