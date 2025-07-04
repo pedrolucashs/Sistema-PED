@@ -2,7 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import view.*;
+import view_controller.*;
 
 /*
  * Classe Modelo que provê alguns dados e serviços para views e controllers

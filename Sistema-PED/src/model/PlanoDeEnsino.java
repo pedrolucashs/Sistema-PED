@@ -14,7 +14,6 @@ public class PlanoDeEnsino {
     private String sistemaAvaliacao;
     private List<MaterialEstudo> bibliografiaBasica;
     private List<MaterialEstudo> bibliografiaComplementar;
-    private Professor professor;
 
     public AnoSemestre getAnoSemestre() {return anoSemestre;}
 
@@ -82,9 +81,4 @@ public class PlanoDeEnsino {
         this.bibliografiaComplementar = bibliografiaComplementar;
     }
 
-    public Professor getProfessor() {return professor;}
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
 }
