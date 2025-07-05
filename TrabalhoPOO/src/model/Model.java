@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
+
 import view.*;
 
 /*
@@ -67,9 +69,9 @@ public class Model {
     /*
      * Adiciona um usuário no mapeamento
      */
-    public void setUsuario(String nome, String login, String senha) {
-        if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Usuario(nome, login, senha));
+    public void setUsuario(Usuario u) {
+        if (u!= null) {
+            usuarios.put(u.getLogin(), u);
             notifica();
         }
     }
@@ -101,6 +103,13 @@ public class Model {
         notifica();
     }
 
+
+    public List<Turma> getTurmasProf() {
+        if(usuarioAutenticado != null && usuarioAutenticado.getTurmas() != null){
+            return usuarioAutenticado.getTurmas();
+        }
+        return null;
+    }
     /*
      * Devolve o usuário autenticado. Se não tiver nenhum usuário autenticado ele devolve null
      */

@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Disciplina {
-    private Campus unidade;
+    private Campus unidade;//?
     private String codigo;
     private String nomeDisciplina;
     private String caraterDisciplina;
@@ -15,7 +18,7 @@ public class Disciplina {
     private String[] preRequisitos;
     private String[] coRequisitos;
     private String[] equivalencias;
-    private String[] cursos;
+    private List<String> cursos = new ArrayList<>();//mudar p um arratList de curso ?
 
     public Campus getUnidade() {return unidade;}
 
@@ -101,9 +104,9 @@ public class Disciplina {
         this.equivalencias = equivalencias;
     }
 
-    public String[] getCursos() {return cursos;}
+    public List<String> getCursos() {return cursos;}
 
-    public void setCursos(String[] cursos) {
+    public void setCursos(List<String> cursos) {
         this.cursos = cursos;
     }
 }
