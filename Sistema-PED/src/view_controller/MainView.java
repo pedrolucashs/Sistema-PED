@@ -35,12 +35,6 @@ public class MainView implements Observer {
             System.out.println("=============================");
             System.out.println();
             System.out.println("Total de Usuarios: " + totalUsuarios);
-            if (model.getUsuarioAutenticado() != "") {
-                System.out.println("Usuario Logado: " + model.getUsuarioLogin());
-                opcoes[0] = "[1] - Fazer Logout";
-            } else {
-                opcoes[0] = "[1] - Fazer Login";
-            }
             System.out.println();
             System.out.println(opcoes[0]);
             System.out.println(opcoes[1]);

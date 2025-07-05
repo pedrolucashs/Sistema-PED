@@ -6,8 +6,9 @@ public class Professor extends Usuario{
     private int id;
     private List<Turma> turmas;
 
-    public Professor(){
-        super();
+    public Professor(String nome, String login, String senha, int id) {
+        super(nome, login, senha);
+        setId(id);
     }
 
     public int getId(){ return id; }

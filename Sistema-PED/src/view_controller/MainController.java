@@ -19,7 +19,23 @@ public class MainController implements Observer{
 
     public void handleEvent(String event) {
         switch (event) {
-
+            case "1":
+                if (model.getUsuarioAutenticado() == "") {
+                    LoginView view1 = new LoginView();
+                    view1.init(model);
+                } else {
+                    model.deslogarUsuario();
+                }
+                break;
+            case "2":
+                CadastrarUsuarioView view2 = new CadastrarUsuarioView();
+                view2.init(model);
+                break;
+            case "3":
+                break;
+            case "4":
+                view.finalizarSistema();
+                break;
         }
     }
 }

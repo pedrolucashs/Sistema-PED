@@ -45,9 +45,9 @@ public class Model {
         return "";
     }
 
-    public void setUsuario(String nome, String login, String senha) {
+    public void setUsuario(String nome, String login, String senha, int id) {
         if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Usuario(nome, login, senha));
+            usuarios.put(login, new Professor(nome, login, senha, id));
             notifica();
         }
     }
