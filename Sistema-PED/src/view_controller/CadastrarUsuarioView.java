@@ -1,4 +1,4 @@
-package view;
+package view_controller;
 import java.util.*;
 import java.util.Observer;
 

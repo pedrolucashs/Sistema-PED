@@ -83,19 +83,43 @@ public class Disciplina {
         this.chExtensao = chExtensao;
     }
 
-    public String[] getPreRequisitos() {return preRequisitos;}
+    public String getPreRequisitos() {
+        String s = "";
+        for(int i = 0; i < preRequisitos.length; i++){
+            s += "- ";
+            s+=preRequisitos[i];
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setPreRequisitos(String[] preRequisitos) {
         this.preRequisitos = preRequisitos;
     }
 
-    public String[] getCoRequisitos() {return coRequisitos;}
+    public String getCoRequisitos() {
+        String s = "";
+        for(int i = 0; i < coRequisitos.length; i++){
+            s += "- ";
+            s += coRequisitos[i];
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setCoRequisitos(String[] coRequisitos) {
         this.coRequisitos = coRequisitos;
     }
 
-    public String[] getEquivalencias() {return equivalencias;}
+    public String getEquivalencias() {
+        String s = "";
+        for(int i = 0; i < equivalencias.length; i++){
+            s += "- ";
+            s+=equivalencias[i];
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setEquivalencias(String[] equivalencias) {
         this.equivalencias = equivalencias;

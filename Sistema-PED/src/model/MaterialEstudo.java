@@ -43,4 +43,8 @@ public class MaterialEstudo {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
+    public String toString(){
+        return "- " + getAutor() + ". " + getTitulo() + ". " + getEdicao() + ". " + getEditora() + ", " + getAno() + ". " + getIsbn();
+    }
 }

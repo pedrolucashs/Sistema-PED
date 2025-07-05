@@ -34,13 +34,29 @@ public class PlanoDeEnsino {
         this.ementa = ementa;
     }
 
-    public String[] getObjetivosGerais() {return objetivosGerais;}
+    public String getObjetivosGerais() {
+        String s = "";
+        for(int i = 0; i < objetivosGerais.length; i++) {
+            s += "- ";
+            s += objetivosGerais[i];
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setObjetivosGerais(String[] objetivosGerais) {
         this.objetivosGerais = objetivosGerais;
     }
 
-    public String[] getObjetivosEspecificos() {return objetivosEspecificos;}
+    public String getObjetivosEspecificos() {
+        String s = "";
+        for(int i = 0; i < objetivosEspecificos.length; i++) {
+            s += "- ";
+            s += objetivosEspecificos[i];
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setObjetivosEspecificos(String[] objetivosEspecificos) {
         this.objetivosEspecificos = objetivosEspecificos;
@@ -58,7 +74,15 @@ public class PlanoDeEnsino {
         this.metodologia = metodologia;
     }
 
-    public String[] getAtividades() {return atividades;}
+    public String getAtividades() {
+        String s = "";
+        for(int i = 0; i < atividades.length; i++) {
+            s += "- ";
+            s += atividades[i];
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setAtividades(String[] atividades) {
         this.atividades = atividades;
@@ -70,13 +94,27 @@ public class PlanoDeEnsino {
         this.sistemaAvaliacao = sistemaAvaliacao;
     }
 
-    public List<MaterialEstudo> getBibliografiaBasica() {return bibliografiaBasica;}
+    public String getBibliografiaBasica() {
+        String s = "";
+        for(int i = 0; i < bibliografiaBasica.size(); i++) {
+            s += bibliografiaBasica.get(i).toString();
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setBibliografiaBasica(List<MaterialEstudo> bibliografiaBasica) {
         this.bibliografiaBasica = bibliografiaBasica;
     }
 
-    public List<MaterialEstudo> getBibliografiaComplementar() {return bibliografiaComplementar;}
+    public String getBibliografiaComplementar() {
+        String s = "";
+        for(int i = 0; i < bibliografiaComplementar.size(); i++) {
+            s += bibliografiaComplementar.get(i).toString();
+            s += "/n";
+        }
+        return s;
+    }
 
     public void setBibliografiaComplementar(List<MaterialEstudo> bibliografiaComplementar) {
         this.bibliografiaComplementar = bibliografiaComplementar;
