@@ -1,5 +1,10 @@
+import model.*;
+import view_controller.*;
+
 public class Main {
     public static void main(String[] args) {
-        //oi, sou pedro lucas, amigo de felps
+        Model model = Model.getInstancia();
+        MainView view = new MainView();
+        view.init(model);
     }
 }
