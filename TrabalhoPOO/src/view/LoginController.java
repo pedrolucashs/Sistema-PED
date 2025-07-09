@@ -6,7 +6,7 @@ public class LoginController implements Observer {
     private Model model;
     private LoginView view;
 
-    public void iniciar(Model model , LoginView view) {
+    public void init(Model model , LoginView view) {
         if(model != null && view != null){
             this.model = model;
             this.view = view;
@@ -14,7 +14,7 @@ public class LoginController implements Observer {
         }
     }
 
-    public void tratarEvento(String evento){
+    public void handleEvent(String evento){
         switch(evento){
             case "OK":
                 boolean autenticado = model.autenticarUsuario(view.getLogin(), view.getSenha());
@@ -23,7 +23,7 @@ public class LoginController implements Observer {
                 }else {
                     view.exibirMensagem("SUCESSO: Usuario autenticado!");
                     ListaTurmasProfView view5 = new ListaTurmasProfView();
-                    view5.iniciar(model);
+                    view5.init(model);
                 }
                 model.detachObserver(this);
                 break;

@@ -6,7 +6,7 @@ public class CadastroTurmaController implements Observer {
     private Model model;
     private CadastroTurmaView view;
 
-    public void iniciar(Model model, CadastroTurmaView view){
+    public void init(Model model, CadastroTurmaView view){
         if(model!=null && view!=null){
             this.model = model;
             this.view = view;
@@ -15,7 +15,7 @@ public class CadastroTurmaController implements Observer {
 
     }
 
-    public void tratarevento(String evento){
+    public void handleEvent(String evento){
 
     }
 

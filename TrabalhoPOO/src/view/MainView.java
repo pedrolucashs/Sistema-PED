@@ -11,11 +11,11 @@ public class MainView implements Observer {
 
     public void finalizarSistema() {this.finalizar = true;}
 
-    public void iniciar(Model model) {
+    public void init(Model model) {
         if(model != null){
             this.model = model;
             controller = new MainController();
-            controller.iniciar(model,this);
+            controller.init(model,this);
             model.attachObserver(this);
             menuPrincipal();
         }
@@ -42,7 +42,7 @@ public class MainView implements Observer {
             System.out.println();
             System.out.println("oque deseja fazer? escolha uma opção: ");
             String evento = scanner.nextLine();
-            controller.tratarEvento(evento);
+            controller.handleEvent(evento);
         }while (!finalizar);
         scanner.close();
     }

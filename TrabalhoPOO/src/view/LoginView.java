@@ -8,10 +8,10 @@ public class LoginView implements Observer {
     private String senha;
     private String login;
 
-    public void iniciar(Model model){
+    public void init(Model model){
         this.model = model;
         controller = new LoginController();
-        controller.iniciar(model,this);
+        controller.init(model,this);
         model.attachObserver(this);
         logarUsuario();
     }
@@ -25,7 +25,7 @@ public class LoginView implements Observer {
         login = scanner.nextLine();
         System.out.println("senha: ");
         senha = scanner.nextLine();
-        controller.tratarEvento("OK");
+        controller.handleEvent("OK");
         model.detachObserver(this);
     }
 

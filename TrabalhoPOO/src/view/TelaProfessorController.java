@@ -9,7 +9,7 @@ public class TelaProfessorController implements Observer {
     private TelaProfessorView view;
 
 
-    public void iniciar(Model model, TelaProfessorView view) {
+    public void init(Model model, TelaProfessorView view) {
         if (model != null && view != null){
             this.model = model;
             this.view = view;
@@ -18,18 +18,18 @@ public class TelaProfessorController implements Observer {
         }
     }
 
-    public void tratarEvento(String event) {
+    public void handleEvent(String event) {
         switch (event){
             case "1":
                 if(model.getTurmasProf() != null){
                     ListaTurmasProfView view6 = new ListaTurmasProfView();
-                    view6.iniciar(model);}
+                    view6.init(model);}
                 else{
                     view.exibirMensagem("nao possui turmas cadastradas ");
                 }
                 break;
-            case "2": CadastroTurmaView view9 = new CadastroTurmaView();
-                view9.iniciar(model);
+            case "2": CadastroTurmaView view7 = new CadastroTurmaView();
+                view7.init(model);
                 break;
             case "3":EditarTurmaView view8 = new EditarTurmaView();
                 view8.iniciar(model);
@@ -37,6 +37,7 @@ public class TelaProfessorController implements Observer {
             case "4":view.finalizarSistema();
                 break;
         }
+        model.detachObserver(this);
     }
 
     public void update() {

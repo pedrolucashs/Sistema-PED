@@ -43,9 +43,7 @@ public class Model {
         }
     }
 
-    /*
-     * Devolve o nome de um usuário do mapeamento
-     */
+
     public String getNomeUsuario(String login) {
         if (login != null) {
             Usuario usuario = usuarios.get(login);
@@ -56,9 +54,7 @@ public class Model {
         return "";
     }
 
-    /*
-     * Devolve o login do usuário autenticado
-     */
+
     public String getUsuarioLogin() {
         if (usuarioAutenticado != null) {
             return usuarioAutenticado.getLogin();
@@ -66,19 +62,15 @@ public class Model {
         return "";
     }
 
-    /*
-     * Adiciona um usuário no mapeamento
-     */
-    public void setUsuario(Usuario u) {
-        if (u!= null) {
-            usuarios.put(u.getLogin(), u);
+
+    public void setUsuario(String nome, String login, String senha, int id) {
+        if (nome != null && login != null && senha != null) {
+            usuarios.put(login, new Professor(nome, login, senha, id));
             notifica();
         }
     }
+//esse set usuario so seta professor????se sim podemos mudar o nome de usuarios p professores ja que teremos outros usuarios , e criar um map novo de coordenadores ou coordenador sla.
 
-    /*
-     * Serviço para autenticar um usuário
-     */
     public boolean autenticarUsuario(String login, String senha) {
         Usuario usuario;
         boolean autenticado = false;
@@ -105,11 +97,16 @@ public class Model {
 
 
     public List<Turma> getTurmasProf() {
-        if(usuarioAutenticado != null && usuarioAutenticado.getTurmas() != null){
-            return usuarioAutenticado.getTurmas();
+        if(usuarioAutenticado != null){
+                if(usuarioAutenticado instanceof Professor){
+                    Professor prof = (Professor) usuarioAutenticado;
+                    if (prof.getTurmas() != null){
+                        return prof.getTurmas();
+                    }
+            }
         }
         return null;
-    }
+    }//mudei aq porque como criei o professor e o coordenandor ai ficou louco aq o negocio;
     /*
      * Devolve o usuário autenticado. Se não tiver nenhum usuário autenticado ele devolve null
      */
@@ -145,4 +142,6 @@ public class Model {
     public int getTotalUsuarios() {
         return usuarios.size();
     }
+
+
 }

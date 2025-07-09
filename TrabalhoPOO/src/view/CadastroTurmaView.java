@@ -7,7 +7,7 @@ public class CadastroTurmaView implements Observer {
     private CadastroTurmaController controller;
     private Turma turma;
 
-    public void iniciar(Model model){
+    public void init(Model model){
         if(model!=null){
             this.model = model;
             controller = new CadastroTurmaController();

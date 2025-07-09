@@ -13,7 +13,7 @@ public class TelaProfessorView implements Observer {
         if (model != null){
             this.model = model;
             controller = new TelaProfessorController();
-            controller.iniciar(model, this);
+            controller.init(model, this);
             model.attachObserver(this);
             menuProfessor();
         }
@@ -39,9 +39,10 @@ public class TelaProfessorView implements Observer {
             System.out.println();
             System.out.println("Digite a opção desejada: ");
             String event = sc.nextLine();
-            controller.tratarEvento(event);
+            controller.handleEvent(event);
         } while(!finalizar);
         sc.close();
+        model.detachObserver(this);
     }
     public void exibirMensagem(String msg){
         System.out.println();
