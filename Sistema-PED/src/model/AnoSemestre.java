@@ -7,7 +7,7 @@ public class AnoSemestre {
     public int getAno() {return ano;}
 
     public void setAno(int ano) {
-        if(ano > 0){
+        if(ano > 1900){
             this.ano = ano;
         }
     }

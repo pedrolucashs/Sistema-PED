@@ -47,7 +47,7 @@ public class Model {
 
     public void setUsuario(String nome, String login, String senha, int id) {
         if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Professor(nome, login, senha, id));
+            usuarios.put(login, new Usuario(nome, id, login, senha));
             notifica();
         }
     }
