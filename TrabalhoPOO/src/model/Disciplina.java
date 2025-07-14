@@ -109,4 +109,24 @@ public class Disciplina {
     public void setCursos(List<String> cursos) {
         this.cursos = cursos;
     }
+
+    public String toString(){
+        return String.format("Campus: %s\nCodigo: %s\nNome da Disciplina: %s\nCarater da Disciplina: %s\nRegime de Oferta: %s\nEstrutura Curricular: %s\nCH Total: %d\nCH Teorica: %d\nCH Pratica: %d\nCH EAD: %d\nCH Extensao: %d\nPre-Requisitos: %s\nCo-Requisitos: %s\nEquivalencias: %s\n",
+                unidade,
+                codigo,
+                nomeDisciplina,
+                caraterDisciplina,
+                regimeOferta,
+                estruturaCurricular,
+                chTotal,
+                chTeorica,
+                chPratica,
+                chEAD,
+                chExtensao,
+                String.join(", ", preRequisitos),
+                String.join(", ", coRequisitos),
+                String.join(", ", equivalencias)
+        );    }
 }
+
+

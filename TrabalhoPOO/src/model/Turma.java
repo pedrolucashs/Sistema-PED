@@ -25,7 +25,14 @@ public class Turma {
         }
     }
 
+    public boolean isPlanodeEnsino() {
+        if(this.plano != null) {
+            return true;
+        }
+        return false;
+    }
+
     public String toString() {
-        return String.format("%s - %s", codigoTurma, disciplina.getNomeDisciplina());
+        return String.format("Codigo da Turma: %s\nDisciplina: %s", codigoTurma, disciplina.getNomeDisciplina());
     }
 }

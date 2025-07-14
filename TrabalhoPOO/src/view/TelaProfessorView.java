@@ -23,7 +23,7 @@ public class TelaProfessorView implements Observer {
 
     public void menuProfessor(){
         Scanner sc = new Scanner(System.in);
-        String[] opcoes = {"[1] - Listar Turmas", "[2] - Adicionar Turma", "[3] - Editar Turma", "[4] - Fazer Logout"};
+        String[] opcoes = {"[1] - Listar Turmas", "[2] - Fazer logout"};
         do {
             System.out.println();
             System.out.println("=============================");
@@ -34,8 +34,6 @@ public class TelaProfessorView implements Observer {
             System.out.println();
             System.out.println(opcoes[0]);
             System.out.println(opcoes[1]);
-            System.out.println(opcoes[2]);
-            System.out.println(opcoes[3]);
             System.out.println();
             System.out.println("Digite a opção desejada: ");
             String event = sc.nextLine();

@@ -22,6 +22,17 @@ public class ListaTurmasProfController implements Observer {
             case "2": TelaProfessorView view11 = new TelaProfessorView();
             view11.init(model);
             break;
+            default:
+                Turma x = model.getTurmasProf().getOrDefault(evento,null);
+                if(x == null){
+                    view.exibeMSG("Turma invalida!");
+                }
+                else{
+                    model.setTurmaEscolhida(x);
+                    TurmaEscolhidaView view12 = new TurmaEscolhidaView();
+                    view12.init(model);
+                }
+                break;
         }
         model.detachObserver(this);
     }

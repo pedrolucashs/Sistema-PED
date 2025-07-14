@@ -16,7 +16,7 @@ public class Model {
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>(); // Usuários do sistema
     private Usuario usuarioAutenticado;	// Usuário autenticado pelo sistema
     private ArrayList<Observer> observers = new ArrayList<Observer>(); // Lista de observadores interessados no modelo
-
+    private Turma turmaEscolhida;
     private static Model instanciaUnica; // Instância do padrão Singleton
 
 
@@ -70,7 +70,12 @@ public class Model {
         }
     }
 //esse set usuario so seta professor????se sim podemos mudar o nome de usuarios p professores ja que teremos outros usuarios , e criar um map novo de coordenadores ou coordenador sla.
-
+    public void setTurmaEscolhida(Turma turma){
+        this.turmaEscolhida = turma;
+    }
+    public Turma getTurmaEscolhida(){
+        return turmaEscolhida;
+    }
     public boolean autenticarUsuario(String login, String senha) {
         Usuario usuario;
         boolean autenticado = false;
@@ -96,7 +101,7 @@ public class Model {
     }
 
 
-    public List<Turma> getTurmasProf() {
+    public HashMap<String, Turma> getTurmasProf() {
         if(usuarioAutenticado != null){
                 if(usuarioAutenticado instanceof Professor){
                     Professor prof = (Professor) usuarioAutenticado;

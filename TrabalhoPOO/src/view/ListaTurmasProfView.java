@@ -16,14 +16,13 @@ public class ListaTurmasProfView implements Observer {
     }
 
     public void listarTurmas(){
-        String opcao[] = {"[1] - adicionar turma ", "[2] - voltar a tela de professor"};
+        String opcao[] = {"[1] - voltar para a tela anterior"};
         Scanner sc = new Scanner(System.in);
         System.out.println("Lista de Turmas");
-        for( Turma turma: model.getTurmasProf()){
+        for( Turma turma: model.getTurmasProf().values()){
             System.out.println("- " + turma);}
         System.out.println(opcao[0]);
-        System.out.println(opcao[1]);
-        System.out.println("escolha uma opção");
+        System.out.println("escolha uma turma ou volte para atela anterior[1]:");
         String evento = sc.nextLine();
         controller.handleEvent(evento);
         model.detachObserver(this);

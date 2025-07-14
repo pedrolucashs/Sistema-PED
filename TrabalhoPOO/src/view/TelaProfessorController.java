@@ -28,13 +28,7 @@ public class TelaProfessorController implements Observer {
                     view.exibirMensagem("nao possui turmas cadastradas ");
                 }
                 break;
-            case "2": CadastroTurmaView view7 = new CadastroTurmaView();
-                view7.init(model);
-                break;
-            case "3":EditarTurmaView view8 = new EditarTurmaView();
-                view8.iniciar(model);
-                break;
-            case "4":view.finalizarSistema();
+            case "2":view.finalizarSistema();
                 break;
         }
         model.detachObserver(this);

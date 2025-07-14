@@ -18,5 +18,8 @@ public class Campus {
         this.nomeUnidade = nomeUnidade;
     }
 
+    public String toString() {
+        return String.format("%s",getNomeUnidade());
+    }
 
 }

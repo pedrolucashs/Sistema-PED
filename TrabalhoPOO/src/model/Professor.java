@@ -1,10 +1,10 @@
 package model;
 
-import java.util.List;
+import java.util.*;
 
 public class Professor extends Usuario{
     private int id;
-    private List<Turma> turmas;
+    private HashMap<String,Turma> turmas;
 
     public Professor(String nome, String login, String senha, int id) {
         setNome(nome);
@@ -21,10 +21,10 @@ public class Professor extends Usuario{
     public int getId(){
         return id;
     }
-    public  void setTurmas(List<Turma> turmas){
-        this.turmas = turmas;
+    public  void setTurmas( Turma turma){
+        turmas.put(turma.getCodigoTurma(), turma);
     }
-    public List<Turma> getTurmas(){
+    public HashMap<String, Turma> getTurmas(){
         return turmas;
     }
 }
