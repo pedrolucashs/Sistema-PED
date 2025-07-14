@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Disciplina {
-    private Campus unidade;
+    private Campus unidade;//?
     private String codigo;
     private String nomeDisciplina;
     private String caraterDisciplina;
@@ -15,7 +18,7 @@ public class Disciplina {
     private String[] preRequisitos;
     private String[] coRequisitos;
     private String[] equivalencias;
-    private String[] cursos;
+    private List<String> cursos = new ArrayList<>();//mudar p um arratList de curso ?
 
     public Campus getUnidade() {return unidade;}
 
@@ -83,51 +86,27 @@ public class Disciplina {
         this.chExtensao = chExtensao;
     }
 
-    public String getPreRequisitos() {
-        String s = "";
-        for(int i = 0; i < preRequisitos.length; i++){
-            s += "- ";
-            s+=preRequisitos[i];
-            s += "/n";
-        }
-        return s;
-    }
+    public String[] getPreRequisitos() {return preRequisitos;}
 
     public void setPreRequisitos(String[] preRequisitos) {
         this.preRequisitos = preRequisitos;
     }
 
-    public String getCoRequisitos() {
-        String s = "";
-        for(int i = 0; i < coRequisitos.length; i++){
-            s += "- ";
-            s += coRequisitos[i];
-            s += "/n";
-        }
-        return s;
-    }
+    public String[] getCoRequisitos() {return coRequisitos;}
 
     public void setCoRequisitos(String[] coRequisitos) {
         this.coRequisitos = coRequisitos;
     }
 
-    public String getEquivalencias() {
-        String s = "";
-        for(int i = 0; i < equivalencias.length; i++){
-            s += "- ";
-            s+=equivalencias[i];
-            s += "/n";
-        }
-        return s;
-    }
+    public String[] getEquivalencias() {return equivalencias;}
 
     public void setEquivalencias(String[] equivalencias) {
         this.equivalencias = equivalencias;
     }
 
-    public String[] getCursos() {return cursos;}
+    public List<String> getCursos() {return cursos;}
 
-    public void setCursos(String[] cursos) {
+    public void setCursos(List<String> cursos) {
         this.cursos = cursos;
     }
 }

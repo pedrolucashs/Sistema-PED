@@ -125,4 +125,8 @@ public class PlanoDeEnsino {
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }
+
+    public boolean finalizarPlanoDeEnsino() {
+        return true;
+    }
 }

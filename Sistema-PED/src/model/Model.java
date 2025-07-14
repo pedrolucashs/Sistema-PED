@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
+
 import view_controller.*;
 
 /*
@@ -16,6 +18,12 @@ public class Model {
     private ArrayList<Observer> observers = new ArrayList<Observer>(); // Lista de observadores interessados no modelo
 
     private static Model instanciaUnica; // Instância do padrão Singleton
+
+    private Campus campus;
+    private Disciplina disciplina;
+    private Turma turma;
+    private PlanoDeEnsino planoDeEnsino;
+    private MaterialEstudo materialEstudo;
 
 
     /*
@@ -67,9 +75,9 @@ public class Model {
     /*
      * Adiciona um usuário no mapeamento
      */
-    public void setUsuario(String nome, String login, String id, String senha) {
-        if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Usuario(nome, login, id, senha));
+    public void setUsuario(String nome, String login, int id, String senha) {
+        if (nome!= null && login != null && id != null && senha != null) {
+            usuarios.put(login, new Usuario(nome, id, login, senha));
             notifica();
         }
     }
@@ -101,6 +109,13 @@ public class Model {
         notifica();
     }
 
+
+    public List<Turma> getTurmasProf() {
+        if(usuarioAutenticado != null && usuarioAutenticado.getTurmas() != null){
+            return usuarioAutenticado.getTurmas();
+        }
+        return null;
+    }
     /*
      * Devolve o usuário autenticado. Se não tiver nenhum usuário autenticado ele devolve null
      */
@@ -128,6 +143,58 @@ public class Model {
         if (observer != null) {
             observers.remove(observer);
         }
+    }
+
+    public String getPlanoDeEnsino(String codigoTurma){
+        String s = String.format("PLANO DE ENSINO");
+        s+= String.format("1.IDENTIFICAÇÃO");
+        s+= String.format("1.1 UNIDADE: " + campus.getNomeUnidade());
+        s+= String.format("1.2 CURSOS: " + campus.getCursos());
+        s+= String.format("1.3 ESTRUTURA CURRICULAR: " + disciplina.getEstruturaCurricular());
+        s+= String.format("1.4 NOME DA DISCIPLINA: " + disciplina.getNomeDisciplina());
+        s+= String.format("1.5 CÓDIGO DA DISCIPLINA: " + disciplina.getCodigo());
+        s+= String.format("1.6 CARÁTER DA DISCIPLINA: " + disciplina.getCaraterDisciplina());
+        s+= String.format("1.7 REGIME DE OFERTA DA DISCIPLINA: " + disciplina.getRegimeOferta());
+        s+= String.format("1.8 CARGA HORÁRIA: %d | CH TEÓRICA: %d | CH PRÁTICA: %d | CH EAD: %d | CH EXTENSÃO: %d" + disciplina.getChTotal(), disciplina.getChTeorica(), disciplina.getChPratica(), disciplina.getChEAD(), disciplina.getChExtensao()));
+        s+= String.format("1.9 PRÉ-REQUISITOS: " + disciplina.getPreRequisitos());
+        s+= String.format("1.10 CO-REQUISITOS: " + disciplina.getCoRequisitos());
+        s+= String.format("1.11 EQUIVALÊNCIAS: " + disciplina.getEquivalencias());
+        s+= String.format("1.12 PROFESSOR: " + model.getNomeUsuario());
+        s += String.format("/n/n");
+        s += String.format("2. JUSTIFICATIVA");
+        s += String.format(planoDeEnsino.getJustificativa());
+        s += String.format("/n/n");
+        s += String.format("3. EMENTA");
+        s += String.format(planoDeEnsino.getEmenta());
+        s += String.format("/n/n");
+        s += String.format("4. OBJETIVOS - GERAL E ESPECÍFICOS");
+        s += String.format("OBJETIVOS GERAIS:");
+        s += String.format(planoDeEnsino.getObjetivosGerais());
+        s += String.format("/n");
+        s += String.format("OBJETIVOS ESPECÍFICOS:");
+        s += String.format(planoDeEnsino.getObjetivosEspecificos());
+        s += String.format("/n/n");
+        s += String.format("5. CALENDÁRIO DE ATIVIDADES");
+        s += String.format(planoDeEnsino.getCalendarioAtividades());
+        s += String.format("/n/n");
+        s += String.format("6. METODOLOGIA DE ENSINO");
+        s += String.format(planoDeEnsino.getMetodologia());
+        s += String.format("/n/n");
+        s += String.format("7. ATIVIDADES DISCENTES");
+        s += String.format(planoDeEnsino.getAtividades());
+        s += String.format("/n/n");
+        s += String.format("8. SISTEMA DE AVALIAÇÃO");
+        s += String.format(planoDeEnsino.getSistemaAvaliacao());
+        s += String.format("/n/n");
+        s += String.format("9. BIBLIOGRAFIA BÁSICA E COMPLEMENTAR");
+        s += String.format("BIBLIOGRAFIA BÁSICA:");
+        s += String.format(planoDeEnsino.getBibliografiaBasica());
+        s += String.format("/n");
+        s += String.format("BIBLIOGRAFIA COMPLEMENTAR:");
+        s += String.format(planoDeEnsino.getBibliografiaComplementar());
+        s += String.format("/n/n");
+
+        return s;
     }
 
     /*

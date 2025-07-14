@@ -1,30 +1,36 @@
 package model;
 
+import java.util.List;
+
 public class Usuario {
     private String nome;
     private String login;
-    private String id;
     private String senha;
+    private int id;
+    private List<Turma> turmas;
 
     public Usuario(){
         super();
     }
 
-    public Usuario(String nome, String login, String id, String senha){
+    public Usuario(String nome, int id, String login, String senha){
         setNome(nome);
         setLogin(login);
-        setId(id);
         setSenha(senha);
+        setId(id);
     }
 
-    public String getId() {
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
         return id;
     }
-
-    public void setId(String id){
-        if (id != null) {
-            this.id = id;
-        }
+    public  void setTurmas(List<Turma> turmas){
+        this.turmas = turmas;
+    }
+    public List<Turma> getTurmas(){
+        return turmas;
     }
 
     public String getNome() {

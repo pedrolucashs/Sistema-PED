@@ -1,6 +1,5 @@
 package view_controller;
 import java.util.*;
-import java.util.Observer;
 
 import model.*;
 
@@ -8,7 +7,7 @@ public class CadastrarUsuarioView implements Observer {
     private Model model;
     private CadastrarUsuarioController controller;
     private String nome;
-    private String id;
+    private int id;
     private String senha;
     private String login;
 
@@ -49,7 +48,7 @@ public class CadastrarUsuarioView implements Observer {
         return senha;
     }
 
-    public String getId() { return id; }
+    public int getId() { return id; }
 
     public void update() {
 
