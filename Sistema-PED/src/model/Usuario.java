@@ -1,13 +1,14 @@
 package model;
 
-import java.util.HashMap;
-import java.util.List;
-
 public class Usuario {
     private String nome;
+    private int id;
     private String login;
     private String senha;
-    private int id;
+
+    public Usuario() {
+        super();
+    }
 
     public Usuario(String nome, int id, String login, String senha){
         setNome(nome);
@@ -50,13 +51,6 @@ public class Usuario {
     public void setId(int id) {
         if (id > 0) {
             this.id = id;
-        }
-    }
-
-    public HashMap<String, Turma> getTurmas(){return turmas;}
-    public void setTurmas(HashMap<String, Turma> turmas){
-        if (turmas != null) {
-            this.turmas = turmas;
         }
     }
 
