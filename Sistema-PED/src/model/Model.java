@@ -2,7 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import view_controller.*;
+import view.*;
 
 public class Model {
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();

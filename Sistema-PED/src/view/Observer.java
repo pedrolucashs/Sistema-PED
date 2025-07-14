@@ -1,4 +1,4 @@
-package view_controller;
+package view;
 
 public interface Observer {
     public void update();

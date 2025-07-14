@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Usuario {
@@ -7,7 +8,6 @@ public class Usuario {
     private String login;
     private String senha;
     private int id;
-    private List<Turma> turmas;
 
     public Usuario(String nome, int id, String login, String senha){
         setNome(nome);
@@ -53,8 +53,8 @@ public class Usuario {
         }
     }
 
-    public List<Turma> getTurmas(){return turmas;}
-    public void setTurmas(List<Turma> turmas){
+    public HashMap<String, Turma> getTurmas(){return turmas;}
+    public void setTurmas(HashMap<String, Turma> turmas){
         if (turmas != null) {
             this.turmas = turmas;
         }

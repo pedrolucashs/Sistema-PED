@@ -1,8 +1,9 @@
 package model;
+import java.util.HashMap;
 
 public class Campus {
     private String nomeUnidade;
-    private String[] cursos;
+    private HashMap<Integer, String> cursos;
 
     public String getNomeUnidade() {return nomeUnidade;}
 
@@ -10,9 +11,9 @@ public class Campus {
         this.nomeUnidade = nomeUnidade;
     }
 
-    public String[] getCursos() {return cursos;}
+    public HashMap<Integer, String> getCursos() {return cursos;}
 
-    public void setCursos(String[] cursos) {
+    public void setCursos(HashMap<Integer, String> cursos) {
         if (cursos != null) {
             this.cursos = cursos;
         }

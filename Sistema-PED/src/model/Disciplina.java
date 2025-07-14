@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+
 public class Disciplina {
     private Campus unidade;
     private String codigo;
@@ -15,7 +17,7 @@ public class Disciplina {
     private String[] preRequisitos;
     private String[] coRequisitos;
     private String[] equivalencias;
-    private String[] cursos;
+    private HashMap<Integer, String> cursos;
 
     public Campus getUnidade() {return unidade;}
 
@@ -101,9 +103,9 @@ public class Disciplina {
         this.equivalencias = equivalencias;
     }
 
-    public String[] getCursos() {return cursos;}
+    public HashMap<Integer, String> getCursos() {return cursos;}
 
-    public void setCursos(String[] cursos) {
+    public void setCursos(HashMap<Integer, String> cursos) {
         this.cursos = cursos;
     }
 }
