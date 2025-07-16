@@ -14,9 +14,6 @@ public class MainController implements Observer{
         }
     }
 
-    public void update() {
-    }
-
     public void handleEvent(String event) {
         switch (event) {
             case "1" :
@@ -25,8 +22,12 @@ public class MainController implements Observer{
                 break;
             case "2" :
                 ConsultarPEDView view3 = new ConsultarPEDView();
+                view3.init(model);
                 break;
             case "3" : view.finalizarSistema(); break;
         }
+    }
+
+    public void update() {
     }
 }

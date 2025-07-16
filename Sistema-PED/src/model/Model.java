@@ -6,7 +6,8 @@ import view.*;
 
 public class Model {
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();
-    private Usuario usuarioAutenticado;	//
+    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();
+    private Usuario usuarioAutenticado;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     private static Model instanciaUnica;
@@ -81,6 +82,10 @@ public class Model {
         }
     }
 
+    public int getTotalUsuarios() {
+        return usuarios.size();
+    }
+
     public void attachObserver(Observer observer) {
         if (observer != null) {
             observers.add(observer);
@@ -93,7 +98,23 @@ public class Model {
         }
     }
 
-    public int getTotalUsuarios() {
-        return usuarios.size();
+    public Turma getTurma(String codigoTurma, String nomeUnidade) {
+        if(listaDeCampus.containsKey(nomeUnidade)){
+            Campus campus = listaDeCampus.get(nomeUnidade);
+            if(campus.getTurmas().containsKey(codigoTurma)){
+                return campus.getTurmas().get(codigoTurma);
+            }
+        }
+        return null;
+    }
+
+    public boolean existePED(String codigoTurma, String nomeUnidade){
+        if(getTurma(codigoTurma,nomeUnidade) != null){
+            Turma turma = getTurma(codigoTurma,nomeUnidade);
+            if(turma.getPlano() != null){
+                return true;
+            }
+        }
+        return false;
     }
 }
