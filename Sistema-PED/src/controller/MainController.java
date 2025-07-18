@@ -17,14 +17,14 @@ public class MainController implements Observer{
     public void handleEvent(String event) {
         switch (event) {
             case "1" :
-                LoginView view2 = new LoginView();
-                view2.init(model);
+                LoginView view1 = new LoginView();
+                view1.init(model);
                 break;
             case "2" :
-                ConsultarPEDView view3 = new ConsultarPEDView();
-                view3.init(model);
+                ConsultarPEDView view2 = new ConsultarPEDView();
+                view2.init(model);
                 break;
-            case "3" : view.finalizarSistema(); break;
+            case "0" : view.finalizarSistema(); break;
         }
     }
 

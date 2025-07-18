@@ -11,6 +11,8 @@ public class Model {
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     private static Model instanciaUnica;
+    private static Admin adminPadrao;
+    private static Campus campusPadrao;
 
     private Model(){
         super();
@@ -19,6 +21,12 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
+            adminPadrao = new Admin("Admin", 0000, "Admin", "Senha");
+            campusPadrao = new Campus("Campus", new HashMap<Integer, String>(), new HashMap<String, Turma>(), new HashMap<Integer, Professor>());
+            adminPadrao.setUnidade(campusPadrao);
+
+            instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
+            instanciaUnica.listaDeCampus.put(campusPadrao.getNomeUnidade(), campusPadrao);
         }
         return instanciaUnica;
     }
@@ -116,5 +124,22 @@ public class Model {
             }
         }
         return false;
+    }
+
+    public void sistemaIniciado(){
+        notifica();
+    }
+
+    public String getTipoUsuario() {
+        if (usuarioAutenticado != null) {
+            String tipoUsuario = "";
+            if(usuarioAutenticado instanceof Admin){
+                tipoUsuario = "Admin";
+            } else if (usuarioAutenticado instanceof Professor){
+                tipoUsuario = "Professor";
+            }
+            return tipoUsuario;
+        }
+        return "";
     }
 }

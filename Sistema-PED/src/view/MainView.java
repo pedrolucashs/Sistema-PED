@@ -21,13 +21,19 @@ public class MainView implements Observer {
             controller = new MainController();
             controller.init(model, this);
             model.attachObserver(this);
+            model.sistemaIniciado();
             menuPrincipal();
         }
     }
 
+    public void update() {
+        totalUsuarios = model.getTotalUsuarios();
+        usuarioLogado = model.getUsuarioLogin();
+    }
+
     public void menuPrincipal() {
         Scanner sc = new Scanner(System.in);
-        String opcoes[] = { "[1] - Fazer Login", "[2] - Consultar Planos de Ensino", "[3] - Finalizar Programa" };
+        String opcoes[] = { "[1] - Fazer Login", "[2] - Consultar Planos de Ensino", "[0] - Finalizar Programa" };
         do {
             System.out.println();
             System.out.println("===============================================");
@@ -36,7 +42,7 @@ public class MainView implements Observer {
             System.out.println();
             System.out.println("Total de Usuários: " + totalUsuarios);
             if (model.getUsuarioAutenticado() != "") {
-                System.out.println("Usuário Logado: " + model.getUsuarioLogin());
+                System.out.println("Usuário Logado: " + usuarioLogado);
             }
             System.out.println();
             System.out.println(opcoes[0]);
@@ -48,10 +54,5 @@ public class MainView implements Observer {
             controller.handleEvent(event);
         } while (!finalizar);
         sc.close();
-    }
-
-    public void update() {
-        totalUsuarios = model.getTotalUsuarios();
-        usuarioLogado = model.getUsuarioLogin();
     }
 }

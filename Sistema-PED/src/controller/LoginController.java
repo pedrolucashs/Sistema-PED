@@ -21,8 +21,14 @@ public class LoginController implements Observer {
                     view.exibeMSG("ERRO: Usuário e/ou senha inválidos!");
                 } else {
                     view.exibeMSG("SUCESSO: Usuário autenticado!");
-                    ProfessorView view2 = new ProfessorView();
-                    view2.init(model);
+                    String tipoUsuario = model.getTipoUsuario();
+                    if (tipoUsuario.equals("Professor")) {
+                        ProfessorView view2 = new ProfessorView();
+                        view2.init(model);
+                    } else if (tipoUsuario.equals("Admin")) {
+                        AdminView view3 = new AdminView();
+                        view3.init(model);
+                    }
                 }
                 model.detachObserver(this);
                 break;

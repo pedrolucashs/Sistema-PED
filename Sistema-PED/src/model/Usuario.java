@@ -6,10 +6,6 @@ public class Usuario {
     private String login;
     private String senha;
 
-    public Usuario() {
-        super();
-    }
-
     public Usuario(String nome, int id, String login, String senha){
         setNome(nome);
         setId(id);

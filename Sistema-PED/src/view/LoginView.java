@@ -8,8 +8,6 @@ import java.util.Scanner;
 public class LoginView implements Observer {
     Model model;
     LoginController controller;
-    private String nome;
-    private int id;
     private String login;
     private String senha;
 
@@ -28,11 +26,6 @@ public class LoginView implements Observer {
         System.out.println("   TELA DE LOGIN");
         System.out.println("=====================");
         System.out.println();
-        System.out.print("Nome: ");
-        nome = sc.nextLine();
-        System.out.print("Número de Identificação: ");
-        id = sc.nextInt();
-        sc.nextLine();
         System.out.print("Login: ");
         login = sc.nextLine();
         System.out.print("Senha: ");
@@ -51,8 +44,6 @@ public class LoginView implements Observer {
 
     }
 
-    public String getNome() {return nome;}
-    public int getId() {return id;}
     public String getLogin() {return login;}
     public String getSenha() {return senha;}
 }

@@ -7,6 +7,13 @@ public class Campus {
     private HashMap<Integer, Professor> professores;
     private HashMap<String, Turma> turmas;
 
+    public Campus(String nomeUnidade, HashMap<Integer, String> cursos, HashMap<String, Turma> turmas, HashMap<Integer, Professor> professores) {
+        setNomeUnidade(nomeUnidade);
+        setCursos(cursos);
+        setTurmas(turmas);
+        setProfessores(professores);
+    }
+
     public String getNomeUnidade() {return nomeUnidade;}
     public void setNomeUnidade(String nomeUnidade) {
         this.nomeUnidade = nomeUnidade;
