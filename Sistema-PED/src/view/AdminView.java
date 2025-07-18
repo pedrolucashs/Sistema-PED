@@ -25,7 +25,8 @@ public class AdminView implements Observer {
 
     public void menuAdmin() {
         Scanner sc = new Scanner(System.in);
-        String opcoes[] = {"[1] - Cadastrar Turma", "[2] - Cadastrar Professor", "[3] - Editar Turma", "[4] - Editar Professor", "[5] - Listar Turmas", "[6] - Listar Professores", "[0] - Fazer Logout"};
+        String opcoes[] = {"[1] - Cadastrar Turma", "[2] - Cadastrar Professor", "[3] - Editar Turma",
+                           "[4] - Editar Professor", "[5] - Listar Turmas", "[6] - Listar Professores", "[0] - Fazer Logout"};
         do {
             System.out.println();
             System.out.println("===========================");

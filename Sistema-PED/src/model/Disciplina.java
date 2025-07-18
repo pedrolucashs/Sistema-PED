@@ -1,7 +1,5 @@
 package model;
 
-import java.util.HashMap;
-
 public class Disciplina {
     private String unidade;
     private String codigo;
@@ -9,15 +7,25 @@ public class Disciplina {
     private String caraterDisciplina;
     private String regimeOferta;
     private String estruturaCurricular;
-    private int chTotal;
-    private int chTeorica;
-    private int chPratica;
-    private int chEAD;
-    private int chExtensao;
+    private int cargaHoraria;
     private String[] preRequisitos;
     private String[] coRequisitos;
     private String[] equivalencias;
-    private HashMap<Integer, String> cursos;
+    private String[] cursos;
+
+    public Disciplina(String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
+                      String caraterDisciplina, String regimeOferta, String estruturaCurricular,
+                      int cargaHoraria, String[] preRequisitos, String[] cursos) {
+        setUnidade(nomeUnidade);
+        setCodigo(codigoDisciplina);
+        setNomeDisciplina(nomeDisciplina);
+        setCaraterDisciplina(caraterDisciplina);
+        setRegimeOferta(regimeOferta);
+        setEstruturaCurricular(estruturaCurricular);
+        setCargaHoraria(cargaHoraria);
+        setPreRequisitos(preRequisitos);
+        setCursos(cursos);
+    }
 
     public String getUnidade() {
         return unidade;
@@ -51,29 +59,11 @@ public class Disciplina {
         this.estruturaCurricular = estruturaCurricular;
     }
 
-    public int getChTotal() {return chTotal;}
-    public void setChTotal(int chTotal) {
-        this.chTotal = chTotal;
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
-
-    public int getChTeorica() {return chTeorica;}
-    public void setChTeorica(int chTeorica) {
-        this.chTeorica = chTeorica;
-    }
-
-    public int getChPratica() {return chPratica;}
-    public void setChPratica(int chPratica) {
-        this.chPratica = chPratica;
-    }
-
-    public int getChEAD() {return chEAD;}
-    public void setChEAD(int chEAD) {
-        this.chEAD = chEAD;
-    }
-
-    public int getChExtensao() {return chExtensao;}
-    public void setChExtensao(int chExtensao) {
-        this.chExtensao = chExtensao;
+    public void setCargaHoraria(int cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 
     public String[] getPreRequisitos() {return preRequisitos;}
@@ -91,8 +81,10 @@ public class Disciplina {
         this.equivalencias = equivalencias;
     }
 
-    public HashMap<Integer, String> getCursos() {return cursos;}
-    public void setCursos(HashMap<Integer, String> cursos) {
+    public String[] getCursos() {
+        return cursos;
+    }
+    public void setCursos(String[] cursos) {
         this.cursos = cursos;
     }
 }

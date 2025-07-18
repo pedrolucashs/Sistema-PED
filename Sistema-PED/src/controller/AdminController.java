@@ -20,6 +20,7 @@ public class AdminController implements Observer {
                 break;
             case "1":
                 CadastrarTurmaView view1 = new CadastrarTurmaView();
+                view1.init(model);
                 break;
             case "2":
                 CadastrarProfView view2 = new CadastrarProfView();

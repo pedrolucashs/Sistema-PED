@@ -21,8 +21,8 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
-            adminPadrao = new Admin("Admin", 0000, "Admin", "Senha");
-            campusPadrao = new Campus("Campus", new HashMap<Integer, String>(), new HashMap<String, Turma>(), new HashMap<Integer, Professor>());
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
+            campusPadrao = new Campus("Campus", new HashMap<String, Turma>(), new HashMap<Integer, Professor>());
             adminPadrao.setUnidade(campusPadrao);
 
             instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
@@ -54,9 +54,10 @@ public class Model {
         return "";
     }
 
-    public void setUsuario(String nome, String login, String senha, int id) {
-        if (nome != null && login != null && senha != null) {
+    public void setUsuario(String nome, String id, String login, String senha) {
+        if (nome != null && login != null && senha != null && id != null) {
             usuarios.put(login, new Usuario(nome, id, login, senha));
+            Admin admin = (Admin) usuarioAutenticado;
             notifica();
         }
     }
@@ -141,5 +142,41 @@ public class Model {
             return tipoUsuario;
         }
         return "";
+    }
+
+    public String getCampus(){
+        if(usuarioAutenticado != null && usuarioAutenticado instanceof Admin){
+            Admin adminLogado = (Admin) usuarioAutenticado;
+            String nomeUnidade = adminLogado.getUnidade().getNomeUnidade();
+            return nomeUnidade;
+        }
+        return "";
+    }
+
+    public boolean existeTurma(String codigoTurma, String nomeUnidade){
+        if(listaDeCampus.get(nomeUnidade).getTurmas().containsKey(codigoTurma)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cadastrarTurma(String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
+                                  String caraterDisciplina, String regimeOferta, String estruturaCurricular,
+                                  int cargaHoraria, String[] preRequisitos, String[] cursos) {
+        if (codigoTurma == null || codigoTurma.trim().isEmpty() ||
+                codigoDisciplina == null || codigoDisciplina.trim().isEmpty() ||
+                nomeUnidade == null || nomeUnidade.trim().isEmpty() || nomeDisciplina == null || nomeDisciplina.trim().isEmpty() || cargaHoraria <= 0){
+            return false;
+        }
+
+        if(existeTurma(codigoTurma, nomeUnidade)){
+            return false;
+        }
+
+        Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
+                                               regimeOferta, estruturaCurricular, cargaHoraria, preRequisitos, cursos);
+        Turma novaTurma = new Turma(codigoTurma, disciplina);
+        listaDeCampus.get(nomeUnidade).getTurmas().put(codigoTurma, novaTurma);
+        return true;
     }
 }

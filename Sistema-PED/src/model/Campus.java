@@ -3,13 +3,11 @@ import java.util.HashMap;
 
 public class Campus {
     private String nomeUnidade;
-    private HashMap<Integer, String> cursos;
     private HashMap<Integer, Professor> professores;
     private HashMap<String, Turma> turmas;
 
-    public Campus(String nomeUnidade, HashMap<Integer, String> cursos, HashMap<String, Turma> turmas, HashMap<Integer, Professor> professores) {
+    public Campus(String nomeUnidade, HashMap<String, Turma> turmas, HashMap<Integer, Professor> professores) {
         setNomeUnidade(nomeUnidade);
-        setCursos(cursos);
         setTurmas(turmas);
         setProfessores(professores);
     }
@@ -17,13 +15,6 @@ public class Campus {
     public String getNomeUnidade() {return nomeUnidade;}
     public void setNomeUnidade(String nomeUnidade) {
         this.nomeUnidade = nomeUnidade;
-    }
-
-    public HashMap<Integer, String> getCursos() {return cursos;}
-    public void setCursos(HashMap<Integer, String> cursos) {
-        if (cursos != null) {
-            this.cursos = cursos;
-        }
     }
 
     public HashMap<Integer, Professor> getProfessores() {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Professor extends Usuario {
     private HashMap<String, Turma> turmas;
 
-    public Professor(String nome, int id, String login, String senha) {
+    public Professor(String nome, String id, String login, String senha) {
         super(nome, id, login, senha);
     }
 
