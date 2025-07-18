@@ -24,12 +24,11 @@ public class AdminController implements Observer {
                 break;
             case "2":
                 CadastrarProfView view2 = new CadastrarProfView();
+                view2.init(model);
                 break;
             case "3":
-                EditarTurmaView view3 = new EditarTurmaView();
                 break;
             case "4":
-                EditarProfView view4 = new EditarProfView();
                 break;
             case "5":
                 ListarTurmasView view5 = new ListarTurmasView();

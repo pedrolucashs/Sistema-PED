@@ -8,6 +8,7 @@ public class Admin extends Usuario {
 
     public Admin(String nome, String id, String login, String senha) {
         super(nome, id, login, senha);
+        setProfessores(new HashMap<String, Professor>());
     }
 
     public Campus getUnidade() {

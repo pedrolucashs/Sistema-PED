@@ -56,8 +56,10 @@ public class Model {
 
     public void setUsuario(String nome, String id, String login, String senha) {
         if (nome != null && login != null && senha != null && id != null) {
-            usuarios.put(login, new Usuario(nome, id, login, senha));
+            Professor novoProfessor = new Professor(nome, id, login, senha);
+            usuarios.put(login, novoProfessor);
             Admin admin = (Admin) usuarioAutenticado;
+            admin.getProfessores().put(id, novoProfessor);
             notifica();
         }
     }
