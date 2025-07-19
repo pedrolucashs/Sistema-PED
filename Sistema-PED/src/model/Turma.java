@@ -1,16 +1,16 @@
 
 package model;
 
+
 public class Turma {
     private String codigoTurma;
     private Disciplina disciplina;
-    private PlanoDeEnsino plano = new PlanoDeEnsino();
+    private PlanoDeEnsino plano;
 
-
-    public void setPlano(PlanoDeEnsino plano){
-        this.plano = plano;
+    public Turma(String codigoTurma, Disciplina disciplina) {
+        setCodigoTurma(codigoTurma);
+        setDisciplina(disciplina);
     }
-    public PlanoDeEnsino getPlano(){return plano;}
 
     public String getCodigoTurma() {return codigoTurma;}
 
@@ -18,7 +18,9 @@ public class Turma {
         this.codigoTurma = codigoTurma;
     }
 
-    public Disciplina getDisciplina() {return disciplina;}
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
 
     public void setDisciplina(Disciplina disciplina) {
         if(disciplina != null) {
@@ -26,7 +28,13 @@ public class Turma {
         }
     }
 
-    public String toString() {
-        return String.format("%s - %s", codigoTurma, disciplina.getNomeDisciplina());
+    public PlanoDeEnsino getPlano() {
+        return plano;
+    }
+
+    public void setPlano(PlanoDeEnsino plano) {
+        if(plano != null) {
+            this.plano = plano;
+        }
     }
 }

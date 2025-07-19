@@ -14,6 +14,7 @@ public class Model {
      * Dados do sistema
      */
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>(); // Usuários do sistema
+    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();
     private Usuario usuarioAutenticado;	// Usuário autenticado pelo sistema
     private ArrayList<Observer> observers = new ArrayList<Observer>(); // Lista de observadores interessados no modelo
 
@@ -24,6 +25,9 @@ public class Model {
     private Turma turma;
     private PlanoDeEnsino planoDeEnsino;
     private MaterialEstudo materialEstudo;
+
+    private static Admin adminPadrao;
+    private static Campus campusPadrao;
 
 
     /*
@@ -36,6 +40,12 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
+            campusPadrao = new Campus("Campus", new HashMap<String, Turma>(), new HashMap<Integer, Professor>());
+            adminPadrao.setUnidade(campusPadrao);
+
+            instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
+            instanciaUnica.listaDeCampus.put(campusPadrao.getNomeUnidade(), campusPadrao);
         }
         return instanciaUnica;
     }
@@ -197,9 +207,19 @@ public class Model {
         return s;
     }
 
-    /*
-     * Informa o total de usuários cadastrados
-     */
+    public boolean excluirTurma(String codigoTurma){
+        Admin admin = (Admin)usuarioAutenticado;
+
+        Turma turma = admin.getUnidade().getTurmas().get(codigoTurma);
+        if (turma != null) {
+            admin.getUnidade().getTurmas().remove(codigoTurma);
+            notifica();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public int getTotalUsuarios() {
         return usuarios.size();
     }
