@@ -6,19 +6,16 @@ public class AtividadeCalendario {
     private int cargaHoraria;
 
     public String getData() {return data;}
-
     public void setData(String data) {
         this.data = data;
     }
 
     public String getDescricaoConteudo() {return descricaoConteudo;}
-
     public void setDescricaoConteudo(String descricaoConteudo) {
         this.descricaoConteudo = descricaoConteudo;
     }
 
     public int getCargaHoraria() {return cargaHoraria;}
-
     public void setCargaHoraria(int cargaHoraria) {
         if(cargaHoraria > 0){
             this.cargaHoraria = cargaHoraria;

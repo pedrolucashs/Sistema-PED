@@ -3,6 +3,7 @@ package model;
 import java.util.HashMap;
 import java.util.ArrayList;
 import view.*;
+import model.exceptions.*;
 
 public class Model {
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();
@@ -211,45 +212,48 @@ public class Model {
         Turma novaTurma = new Turma(codigoTurma, disciplina, admin.getUnidade().getProfessores().get(idProfessor).getNome());
         admin.getUnidade().getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
         admin.getUnidade().getTurmas().put(codigoTurma, novaTurma);
+        listaDeCampus.get(admin.getUnidade().getNomeUnidade()).getTurmas().put(codigoTurma, novaTurma);
+
         return true;
     }
 
     public String getPlanoDeEnsino(String codigoTurma, String nomeUnidade){
         Turma turma = getTurma(codigoTurma, nomeUnidade);
-        String s = String.format("PLANO DE ENSINO");
-        s+= String.format("1.IDENTIFICAÇÃO");
-        s+= String.format("1.1 UNIDADE: " + nomeUnidade);
-        s+= String.format("1.2 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular());
-        s+= String.format("1.3 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina());
-        s+= String.format("1.4 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo());
-        s+= String.format("1.5 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina());
-        s+= String.format("1.6 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta());
+        String s = String.format("PLANO DE ENSINO\n");
+        s+=String.format("ANO/SEMESTRE: %s\n\n", turma.getPlano().getAnoSemestre());
+        s+= String.format("1.IDENTIFICAÇÃO\n");
+        s+= String.format("1.1 UNIDADE: " + nomeUnidade + "\n");
+        s+= String.format("1.2 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular() + "\n");
+        s+= String.format("1.3 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina() + "\n");
+        s+= String.format("1.4 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo() + "\n");
+        s+= String.format("1.5 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina() + "\n");
+        s+= String.format("1.6 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta() + "\n");
         s+= String.format("1.7 CARGA HORÁRIA: %d", turma.getDisciplina().getCargaHoraria());
-        s+= String.format("1.8 PROFESSOR: " + turma.getPlano().getNomeProfessor());
-        s += String.format("/n/n");
-        s += String.format("2. JUSTIFICATIVA");
+        s+= String.format("\n1.8 PROFESSOR: " + turma.getPlano().getNomeProfessor());
+        s += String.format("\n\n");
+        s += String.format("2. JUSTIFICATIVA\n");
         s += String.format(turma.getPlano().getJustificativa());
-        s += String.format("/n/n");
-        s += String.format("3. EMENTA");
+        s += String.format("\n\n");
+        s += String.format("3. EMENTA\n");
         s += String.format(turma.getPlano().getEmenta());
-        s += String.format("/n/n");
-        s += String.format("4. OBJETIVOS");
+        s += String.format("\n\n");
+        s += String.format("4. OBJETIVOS\n");
         s += String.format(turma.getPlano().getObjetivos());
-        s += String.format("/n/n");
-        s += String.format("5. CALENDÁRIO DE ATIVIDADES");
-        s += String.format("/n/n");
-        s += String.format("6. METODOLOGIA DE ENSINO");
+        s += String.format("\n\n");
+        s += String.format("5. CALENDÁRIO DE ATIVIDADES\n");
+        s += String.format("\n\n");
+        s += String.format("6. METODOLOGIA DE ENSINO\n");
         s += String.format(turma.getPlano().getMetodologia());
-        s += String.format("/n/n");
-        s += String.format("7. ATIVIDADES DISCENTES");
+        s += String.format("\n\n");
+        s += String.format("7. ATIVIDADES DISCENTES\n");
         s += String.format(turma.getPlano().getAtividades());
-        s += String.format("/n/n");
-        s += String.format("8. SISTEMA DE AVALIAÇÃO");
+        s += String.format("\n\n");
+        s += String.format("8. SISTEMA DE AVALIAÇÃO\n");
         s += String.format(turma.getPlano().getSistemaAvaliacao());
-        s += String.format("/n/n");
-        s += String.format("9. BIBLIOGRAFIA");
+        s += String.format("\n\n");
+        s += String.format("9. BIBLIOGRAFIA\n");
         s += String.format(turma.getPlano().getBibliografia());
-        s += String.format("/n/n");
+        s += String.format("\n\n");
 
         return s;
     }
@@ -288,6 +292,7 @@ public class Model {
                     for (HashMap.Entry<String, Turma> entrada : campus.getTurmas().entrySet()) {
                         Turma turma = entrada.getValue();
                         resultado += turma.toString() + "\n";
+                        resultado += "\n";
                     }
                     return resultado;
                 }
@@ -320,5 +325,30 @@ public class Model {
         } else {
             return false;
         }
+    }
+
+    public boolean excluirProfessor(String idProfessor) {
+        if (!(usuarioAutenticado instanceof Admin)) {
+            throw new PermissaoNegadaException("Apenas administradores podem excluir professores.");
+        }
+
+        Admin adminLogado = (Admin) usuarioAutenticado;
+        Campus campusDoAdmin = adminLogado.getUnidade();
+
+        if (!campusDoAdmin.getProfessores().containsKey(idProfessor)) {
+            throw new ProfessorNaoEncontradoException(String.format("Professor com ID '%s' não encontrado no campus '%s'.", idProfessor, campusDoAdmin.getNomeUnidade()));
+        }
+
+        Professor professorParaExcluir = campusDoAdmin.getProfessores().get(idProfessor);
+
+        campusDoAdmin.getProfessores().remove(idProfessor);
+
+        String loginProfessor = professorParaExcluir.getLogin();
+        if (usuarios.containsKey(loginProfessor)) {
+            usuarios.remove(loginProfessor);
+        } else {
+        }
+        notifica();
+        return true;
     }
 }

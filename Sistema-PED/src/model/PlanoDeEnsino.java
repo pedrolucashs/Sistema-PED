@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class PlanoDeEnsino {
-    private AnoSemestre anoSemestre;
+    private String anoSemestre;
     private String justificativa;
     private String ementa;
     private String[] objetivos;
@@ -23,22 +23,40 @@ public class PlanoDeEnsino {
 
     }
 
-    public AnoSemestre getAnoSemestre() {return anoSemestre;}
-    public void setAnoSemestre(AnoSemestre anoSemestre) {
+    public String getAnoSemestre() {
+        if (anoSemestre == null) {
+            anoSemestre = "";
+        }
+        return anoSemestre;
+    }
+    public void setAnoSemestre(String anoSemestre) {
         this.anoSemestre = anoSemestre;
     }
 
-    public String getJustificativa() {return justificativa;}
+    public String getJustificativa() {
+        if(justificativa == null){
+            return "";
+        }
+        return justificativa;
+    }
     public void setJustificativa(String justificativa) {
         this.justificativa = justificativa;
     }
 
-    public String getEmenta() {return ementa;}
+    public String getEmenta() {
+        if(ementa == null){
+            return "";
+        }
+        return ementa;
+    }
     public void setEmenta(String ementa) {
         this.ementa = ementa;
     }
 
     public String getObjetivos() {
+        if(objetivos == null){
+            return "";
+        }
         String s = "";
         for(int i = 0; i < objetivos.length; i++) {
             s += "- ";
@@ -52,17 +70,35 @@ public class PlanoDeEnsino {
     }
 
 
-    public List<AtividadeCalendario> getCalendarioAtividades() {return calendarioAtividades;}
+    public String getCalendarioAtividades() {
+        if(calendarioAtividades == null){
+            return "";
+        }
+        String s = "";
+        for(int i = 0; i < calendarioAtividades.size(); i++) {
+            s += calendarioAtividades.get(i).toString();
+            s += "/n";
+        }
+        return s;
+    }
     public void setCalendarioAtividades(List<AtividadeCalendario> calendarioAtividades) {
         this.calendarioAtividades = calendarioAtividades;
     }
 
-    public String getMetodologia() {return metodologia;}
+    public String getMetodologia() {
+        if(metodologia == null){
+            return "";
+        }
+        return metodologia;
+    }
     public void setMetodologia(String metodologia) {
         this.metodologia = metodologia;
     }
 
     public String getAtividades() {
+        if(atividades == null){
+            return "";
+        }
         String s = "";
         for(int i = 0; i < atividades.length; i++) {
             s += "- ";
@@ -75,12 +111,20 @@ public class PlanoDeEnsino {
         this.atividades = atividades;
     }
 
-    public String getSistemaAvaliacao() {return sistemaAvaliacao;}
+    public String getSistemaAvaliacao() {
+        if(sistemaAvaliacao == null){
+            return "";
+        }
+        return sistemaAvaliacao;
+    }
     public void setSistemaAvaliacao(String sistemaAvaliacao) {
         this.sistemaAvaliacao = sistemaAvaliacao;
     }
 
     public String getBibliografia() {
+        if(bibliografia == null){
+            return "";
+        }
         String s = "";
         for(int i = 0; i < bibliografia.size(); i++) {
             s += bibliografia.get(i).toString();

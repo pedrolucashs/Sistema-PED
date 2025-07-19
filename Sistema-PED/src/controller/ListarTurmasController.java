@@ -28,7 +28,7 @@ public class ListarTurmasController implements Observer {
                 }
                 model.detachObserver(this);
                 break;
-            case "2":
+            case "0":
                 view.finalizar();
                 model.detachObserver(this);
                 break;

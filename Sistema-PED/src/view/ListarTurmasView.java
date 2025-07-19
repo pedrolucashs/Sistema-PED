@@ -9,6 +9,7 @@ public class ListarTurmasView implements Observer {
     private ListarTurmasController controller;
     private boolean finalizar = false;
     private String codigoTurma;
+    private String usuario;
 
     public void finalizar() {
         finalizar = true;
@@ -23,13 +24,18 @@ public class ListarTurmasView implements Observer {
     }
 
     public void listarTurmas(){
-        String opcoes[] = {"[1] - Escolher Turma", "[2] - Voltar"};
+        usuario = model.getTipoUsuario();
+        String opcoes[] = {"[1] - Escolher Turma", "[0] - Voltar"};
         Scanner sc = new Scanner(System.in);
         do{
             System.out.println();
             System.out.print(model.getTurmas());
-            System.out.println(opcoes[0]);
-            System.out.println(opcoes[1]);
+            if(usuario == "Admin"){
+                System.out.println(opcoes[1]);
+            } else if(usuario == "Professor"){
+                System.out.println(opcoes[0]);
+                System.out.println(opcoes[1]);
+            }
             System.out.println("Digite a opção desejada: ");
             String evento = sc.nextLine();
             if(evento.equals("1")){

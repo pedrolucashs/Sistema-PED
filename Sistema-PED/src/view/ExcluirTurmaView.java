@@ -6,8 +6,13 @@ import controller.ExcluirTurmaController;
 
 public class ExcluirTurmaView implements Observer {
     private Model model;
-    ExcluirTurmaController controller;
+    private ExcluirTurmaController controller;
     private String codigoTurma;
+    private boolean finalizar = false;
+
+    public void finalizar() {
+        finalizar = true;
+    }
 
     public void init(Model model) {
         if (model != null) {
@@ -19,19 +24,24 @@ public class ExcluirTurmaView implements Observer {
         }
     }
 
-        public void excluirTurma () {
-            Scanner sc = new Scanner(System.in);
+    public void excluirTurma () {
+        Scanner sc = new Scanner(System.in);
+        do{
             System.out.println("Digite o código da Turma: ");
             codigoTurma = sc.nextLine();
-
             controller.handleEvent("OK");
             model.detachObserver(this);
-        }
+        } while(!finalizar);
+    }
 
-        public void exibeMsg (String msg){
-            System.out.println(msg);
-        }
+    public void exibeMsg (String msg){
+        System.out.println(msg);
+    }
 
-        public void update () {
-        }
+    public void update () {
+    }
+
+    public String getCodigoTurma() {
+        return codigoTurma;
+    }
 }
