@@ -1,14 +1,13 @@
 package view;
-
+//importando a classe model e outras coisas necessarias
 import model.Model;
-
 import java.util.Scanner;
-
+// essa classe é a tela inicial do professor, representa a interfasse de texto que o professor ver.
 public class TelaProfessorView implements Observer {
     private Model model;
     private TelaProfessorController controller;
     private boolean finalizar = false;
-
+    // inicializa a tela do professor
     public void init(Model model){
         if (model != null){
             this.model = model;
@@ -18,6 +17,7 @@ public class TelaProfessorView implements Observer {
             menuProfessor();
         }
     }
+    //metodo para encerrar o menu
     public void finalizarSistema() {this.finalizar = true;}
 
 
@@ -37,16 +37,21 @@ public class TelaProfessorView implements Observer {
             System.out.println();
             System.out.println("Digite a opção desejada: ");
             String event = sc.nextLine();
+            //envia o evento para o controller tratar
             controller.handleEvent(event);
         } while(!finalizar);
+        //encerra o scaner
         sc.close();
+        //remove o observador
         model.detachObserver(this);
     }
+    //metodo para exibir mensagens
     public void exibirMensagem(String msg){
         System.out.println();
         System.out.println(msg);
         System.out.println();
     }
+    //metodo obrigatório da interface Observer, mas ainda não implementado
     public void update() {
 
     }

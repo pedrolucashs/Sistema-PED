@@ -1,6 +1,6 @@
 package model;
 
-public class Coordenador extends Usuario{
+public class Admin extends Usuario{
     private String id;
 
 }
