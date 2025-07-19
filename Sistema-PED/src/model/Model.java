@@ -189,6 +189,10 @@ public class Model {
         return false;
     }
 
+    public boolean cadastrarEmenta(){
+        
+    }
+
     public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
                                   int cargaHoraria) {
