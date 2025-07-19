@@ -1,15 +1,12 @@
 package model;
 
-import java.util.List;
-
 public class Usuario {
     private String nome;
+    private String id;
     private String login;
     private String senha;
-    private int id;
-    private List<Turma> turmas;
 
-    public Usuario(String nome, int id, String login, String senha){
+    public Usuario(String nome, String id, String login, String senha){
         setNome(nome);
         setId(id);
         setLogin(login);
@@ -46,18 +43,11 @@ public class Usuario {
         }
     }
 
-    public int getId(){ return id; }
-    public void setId(int id) {
-        if (id > 0) {
-            this.id = id;
-        }
+    public String getId() {
+        return id;
     }
-
-    public List<Turma> getTurmas(){return turmas;}
-    public void setTurmas(List<Turma> turmas){
-        if (turmas != null) {
-            this.turmas = turmas;
-        }
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String toString() {

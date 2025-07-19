@@ -5,6 +5,11 @@ public class Turma {
     private Disciplina disciplina;
     private PlanoDeEnsino plano;
 
+    public Turma(String codigoTurma, Disciplina disciplina) {
+        setCodigoTurma(codigoTurma);
+        setDisciplina(disciplina);
+    }
+
     public String getCodigoTurma() {return codigoTurma;}
 
     public void setCodigoTurma(String codigoTurma) {

@@ -2,14 +2,17 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import view_controller.*;
+import view.*;
 
 public class Model {
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();
-    private Usuario usuarioAutenticado;	//
+    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();
+    private Usuario usuarioAutenticado;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     private static Model instanciaUnica;
+    private static Admin adminPadrao;
+    private static Campus campusPadrao;
 
     private Model(){
         super();
@@ -18,6 +21,12 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
+            campusPadrao = new Campus("Campus", new HashMap<String, Turma>(), new HashMap<Integer, Professor>());
+            adminPadrao.setUnidade(campusPadrao);
+
+            instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
+            instanciaUnica.listaDeCampus.put(campusPadrao.getNomeUnidade(), campusPadrao);
         }
         return instanciaUnica;
     }
@@ -45,11 +54,19 @@ public class Model {
         return "";
     }
 
-    public void setUsuario(String nome, String login, String senha, int id) {
-        if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Usuario(nome, id, login, senha));
+    public boolean setUsuario(String nome, String id, String login, String senha) {
+        if (nome != null && login != null && senha != null && id != null) {
+            if(usuarios.containsKey(login)){
+                return false;
+            }
+            Professor novoProfessor = new Professor(nome, id, login, senha);
+            usuarios.put(login, novoProfessor);
+            Admin admin = (Admin) usuarioAutenticado;
+            admin.getProfessores().put(id, novoProfessor);
             notifica();
+            return true;
         }
+        return false;
     }
 
     public boolean autenticarUsuario(String login, String senha) {
@@ -81,6 +98,10 @@ public class Model {
         }
     }
 
+    public int getTotalUsuarios() {
+        return usuarios.size();
+    }
+
     public void attachObserver(Observer observer) {
         if (observer != null) {
             observers.add(observer);
@@ -93,7 +114,128 @@ public class Model {
         }
     }
 
-    public int getTotalUsuarios() {
-        return usuarios.size();
+    private Turma getTurma(String codigoTurma, String nomeUnidade) {
+        if(listaDeCampus.containsKey(nomeUnidade)){
+            Campus campus = listaDeCampus.get(nomeUnidade);
+            if(campus.getTurmas().containsKey(codigoTurma)){
+                return campus.getTurmas().get(codigoTurma);
+            }
+        }
+        return null;
+    }
+
+    public boolean existePED(String codigoTurma, String nomeUnidade){
+        if(getTurma(codigoTurma,nomeUnidade) != null){
+            Turma turma = getTurma(codigoTurma,nomeUnidade);
+            if(turma.getPlano() != null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void sistemaIniciado(){
+        notifica();
+    }
+
+    public String getTipoUsuario() {
+        if (usuarioAutenticado != null) {
+            String tipoUsuario = "";
+            if(usuarioAutenticado instanceof Admin){
+                tipoUsuario = "Admin";
+            } else if (usuarioAutenticado instanceof Professor){
+                tipoUsuario = "Professor";
+            }
+            return tipoUsuario;
+        }
+        return "";
+    }
+
+    public String getCampus(){
+        if(usuarioAutenticado != null && usuarioAutenticado instanceof Admin){
+            Admin adminLogado = (Admin) usuarioAutenticado;
+            String nomeUnidade = adminLogado.getUnidade().getNomeUnidade();
+            return nomeUnidade;
+        }
+        return "";
+    }
+
+    public boolean existeTurma(String codigoTurma, String nomeUnidade){
+        if(listaDeCampus.get(nomeUnidade).getTurmas().containsKey(codigoTurma)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cadastrarTurma(String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
+                                  String caraterDisciplina, String regimeOferta, String estruturaCurricular,
+                                  int cargaHoraria, String[] preRequisitos, String[] cursos) {
+        if (codigoTurma == null || codigoTurma.trim().isEmpty() ||
+                codigoDisciplina == null || codigoDisciplina.trim().isEmpty() ||
+                nomeUnidade == null || nomeUnidade.trim().isEmpty() || nomeDisciplina == null || nomeDisciplina.trim().isEmpty() || cargaHoraria <= 0){
+            return false;
+        }
+
+        if(existeTurma(codigoTurma, nomeUnidade)){
+            return false;
+        }
+
+        Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
+                                               regimeOferta, estruturaCurricular, cargaHoraria, preRequisitos, cursos);
+        Turma novaTurma = new Turma(codigoTurma, disciplina);
+        listaDeCampus.get(nomeUnidade).getTurmas().put(codigoTurma, novaTurma);
+        return true;
+    }
+
+    public String getPlanoDeEnsino(String codigoTurma, String nomeUnidade){
+        Turma turma = getTurma(codigoTurma, nomeUnidade);
+        String s = String.format("PLANO DE ENSINO");
+        s+= String.format("1.IDENTIFICAÇÃO");
+        s+= String.format("1.1 UNIDADE: " + nomeUnidade);
+        s+= String.format("1.2 CURSOS: " + turma.getDisciplina().getCursos());
+        s+= String.format("1.3 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular());
+        s+= String.format("1.4 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina());
+        s+= String.format("1.5 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo());
+        s+= String.format("1.6 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina());
+        s+= String.format("1.7 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta());
+        s+= String.format("1.8 CARGA HORÁRIA: %d", turma.getDisciplina().getCargaHoraria());
+        s+= String.format("1.9 PRÉ-REQUISITOS: " + turma.getDisciplina().getPreRequisitos());
+        s+= String.format("1.10 CO-REQUISITOS: " + turma.getDisciplina().getCoRequisitos());
+        s+= String.format("1.11 EQUIVALENCIAS: " + turma.getDisciplina().getEquivalencias());
+        s+= String.format("1.12 PROFESSOR: " + turma.getPlano().getNomeProfessor());
+        s += String.format("/n/n");
+        s += String.format("2. JUSTIFICATIVA");
+        s += String.format(turma.getPlano().getJustificativa());
+        s += String.format("/n/n");
+        s += String.format("3. EMENTA");
+        s += String.format(turma.getPlano().getEmenta());
+        s += String.format("/n/n");
+        s += String.format("4. OBJETIVOS - GERAL E ESPECÍFICOS");
+        s += String.format("OBJETIVOS GERAIS:");
+        s += String.format(turma.getPlano().getObjetivosGerais());
+        s += String.format("/n");
+        s += String.format("OBJETIVOS ESPECÍFICOS:");
+        s += String.format(turma.getPlano().getObjetivosEspecificos());
+        s += String.format("/n/n");
+        s += String.format("5. CALENDÁRIO DE ATIVIDADES");
+        s += String.format("/n/n");
+        s += String.format("6. METODOLOGIA DE ENSINO");
+        s += String.format(turma.getPlano().getMetodologia());
+        s += String.format("/n/n");
+        s += String.format("7. ATIVIDADES DISCENTES");
+        s += String.format(turma.getPlano().getAtividades());
+        s += String.format("/n/n");
+        s += String.format("8. SISTEMA DE AVALIAÇÃO");
+        s += String.format(turma.getPlano().getSistemaAvaliacao());
+        s += String.format("/n/n");
+        s += String.format("9. BIBLIOGRAFIA BÁSICA E COMPLEMENTAR");
+        s += String.format("BIBLIOGRAFIA BÁSICA:");
+        s += String.format(turma.getPlano().getBibliografiaBasica());
+        s += String.format("/n");
+        s += String.format("BIBLIOGRAFIA COMPLEMENTAR:");
+        s += String.format(turma.getPlano().getBibliografiaComplementar());
+        s += String.format("/n/n");
+
+        return s;
     }
 }
