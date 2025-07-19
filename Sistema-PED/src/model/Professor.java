@@ -29,4 +29,8 @@ public class Professor extends Usuario {
             this.campus = campus;
         }
     }
+
+    public String toString(){
+        return String.format("Nome: %s\nLogin: %s\nId: %s",getNome(),getLogin(),getId());
+    }
 }

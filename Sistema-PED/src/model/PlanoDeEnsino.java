@@ -1,26 +1,24 @@
 package model;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class PlanoDeEnsino {
     private String anoSemestre;
     private String justificativa;
     private String ementa;
     private String[] objetivos;
-    private List<AtividadeCalendario> calendarioAtividades;
+    private HashMap<String, AtividadeCalendario> calendarioAtividades;
     private String metodologia;
     private String[] atividades;
     private String sistemaAvaliacao;
-    private List<MaterialEstudo> bibliografia;
+    private HashMap<String, MaterialEstudo> bibliografia;
     private String nomeProfessor;
 
     public PlanoDeEnsino(String nomeProfessor) {
         super();
         setNomeProfessor(nomeProfessor);
-    }
-
-    public void editarPlano(){
-
+        setCalendarioAtividades(new HashMap<String, AtividadeCalendario>());
+        setBibliografia(new HashMap<String, MaterialEstudo>());
     }
 
     public String getAnoSemestre() {
@@ -70,7 +68,7 @@ public class PlanoDeEnsino {
     }
 
 
-    public String getCalendarioAtividades() {
+    public String getStringCalendarioAtividades() {
         if(calendarioAtividades == null){
             return "";
         }
@@ -81,8 +79,18 @@ public class PlanoDeEnsino {
         }
         return s;
     }
-    public void setCalendarioAtividades(List<AtividadeCalendario> calendarioAtividades) {
+    public HashMap<String, AtividadeCalendario> getCalendarioAtividades(){
+        return calendarioAtividades;
+    }
+    public void setCalendarioAtividades(HashMap<String, AtividadeCalendario> calendarioAtividades) {
         this.calendarioAtividades = calendarioAtividades;
+    }
+    public void addAtividade(String idAtividadade, String data, String descricao, int cargaHoraria) {
+        AtividadeCalendario atividade = new AtividadeCalendario(idAtividadade, data, descricao, cargaHoraria);
+        getCalendarioAtividades().put(idAtividadade, atividade);
+    }
+    public void excluirAtividade(String idAtividadade) {
+        getCalendarioAtividades().remove(idAtividadade);
     }
 
     public String getMetodologia() {
@@ -132,7 +140,7 @@ public class PlanoDeEnsino {
         }
         return s;
     }
-    public void setBibliografia(List<MaterialEstudo> bibliografia) {
+    public void setBibliografia(HashMap<String, MaterialEstudo> bibliografia) {
         this.bibliografia = bibliografia;
     }
 

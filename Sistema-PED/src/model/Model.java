@@ -253,7 +253,7 @@ public class Model {
         s += String.format("\n\n");
         s += String.format("9. BIBLIOGRAFIA\n");
         s += String.format(turma.getPlano().getBibliografia());
-        s += String.format("\n\n");
+        s += String.format("\n");
 
         return s;
     }
@@ -280,6 +280,7 @@ public class Model {
                     for (HashMap.Entry<String, Turma> entrada : prof.getTurmas().entrySet()) {
                         Turma turma = entrada.getValue();
                         resultado += turma.toString() + "\n";
+                        resultado += "\n";
                     }
                     return resultado;
                 }
@@ -350,5 +351,73 @@ public class Model {
         }
         notifica();
         return true;
+    }
+
+    public String getCalendario(String codigoTurma){
+        if(usuarioAutenticado instanceof Professor){
+            Professor prof = (Professor) usuarioAutenticado;
+            if (prof.getTurmas() != null){
+                if(prof.getTurmas().get(codigoTurma) != null){
+                    String resultado = "";
+                    resultado += "Calendário de Atividades:\n\n";
+                    PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                    for (HashMap.Entry<String, AtividadeCalendario> entrada : plano.getCalendarioAtividades().entrySet()) {
+                        AtividadeCalendario atividade = entrada.getValue();
+                        resultado += atividade.toString() + "\n";
+                    }
+                    return resultado;
+                }
+            }
+        }
+        return "";
+    }
+
+    public boolean existeAtividade(String codigoTurma, String idAtividade){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                if(prof.getTurmas().get(codigoTurma).getPlano().getCalendarioAtividades().containsKey(idAtividade)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void addAtividade(String codigoTurma, String idAtividade, String data, String descricao, int cargaHoraria){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.addAtividade(idAtividade, data, descricao, cargaHoraria);
+            }
+        }
+    }
+    public void excluirAtividade(String codigoTurma, String idAtividade){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.excluirAtividade(idAtividade);
+            }
+        }
+    }
+
+    public String getProfessores() {
+        if(usuarioAutenticado instanceof Admin){
+            Admin admin = (Admin) usuarioAutenticado;
+            Campus campus = listaDeCampus.get(admin.getUnidade().getNomeUnidade());
+            if (campus.getProfessores() != null){
+                String resultado = "";
+                resultado += "Lista de Professores:\n\n";
+                for (HashMap.Entry<String,Professor> entrada : campus.getProfessores().entrySet()) {
+                    Professor professor = entrada.getValue();
+                    resultado += professor.toString() + "\n";
+                    resultado += "\n";
+                }
+                return resultado;
+            }
+        }
+        return "";
     }
 }

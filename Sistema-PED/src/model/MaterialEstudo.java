@@ -5,7 +5,7 @@ public class MaterialEstudo {
     private String autor;
     private String edicao;
     private String editora;
-    private int ano;
+    private String ano;
     private String isbn;
 
     public String getTitulo() {return titulo;}
@@ -32,9 +32,10 @@ public class MaterialEstudo {
         this.editora = editora;
     }
 
-    public int getAno() {return ano;}
-
-    public void setAno(int ano) {
+    public String getAno() {
+        return ano;
+    }
+    public void setAno(String ano) {
         this.ano = ano;
     }
 
