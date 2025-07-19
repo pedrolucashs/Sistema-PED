@@ -16,8 +16,6 @@ public class CadastrarTurmaView implements Observer {
     private String regimeOferta;
     private String estruturaCurricular;
     private int cargaHoraria;
-    private String[] preRequisitos;
-    private String[] cursos;
 
     public void init(Model model) {
         this.model = model;
@@ -59,16 +57,6 @@ public class CadastrarTurmaView implements Observer {
                 sc.nextLine();
             }
         }
-
-
-        System.out.print("Digite os pré-requisitos da disciplina (Separados por vírgula, se houver mais de um): ");
-        String preRequisitosStr = sc.nextLine();
-        this.preRequisitos = preRequisitosStr.isEmpty() ? new String[0] : preRequisitosStr.split(",");
-
-        System.out.print("Digite os cursos que apresentam esta disciplina (Separados por vírgula, se houver mais de um): ");
-        String cursosStr = sc.nextLine();
-        this.cursos = cursosStr.isEmpty() ? new String[0] : cursosStr.split(",");
-
         controller.handleEvent("OK");
         model.detachObserver(this);
     }
@@ -103,11 +91,5 @@ public class CadastrarTurmaView implements Observer {
     }
     public int getCargaHoraria() {
         return cargaHoraria;
-    }
-    public String[] getPreRequisitos() {
-        return preRequisitos;
-    }
-    public String[] getCursos() {
-        return cursos;
     }
 }

@@ -23,13 +23,11 @@ public class CadastrarTurmaController implements Observer {
                 String regimeOferta = view.getRegimeOferta();
                 String estruturaCurricular = view.getEstruturaCurricular();
                 int cargaHoraria = view.getCargaHoraria();
-                String[] preRequisitos = view.getPreRequisitos();
-                String[] cursos = view.getCursos();
 
                 boolean sucessoCadastro = model.cadastrarTurma(
                         codigoTurma, codigoDisciplina, nomeUnidade, nomeDisciplina,
                         caraterDisciplina, regimeOferta, estruturaCurricular,
-                        cargaHoraria, preRequisitos, cursos
+                        cargaHoraria
                 );
 
                 if (sucessoCadastro) {

@@ -6,14 +6,12 @@ public class PlanoDeEnsino {
     private AnoSemestre anoSemestre;
     private String justificativa;
     private String ementa;
-    private String[] objetivosGerais;
-    private String[] objetivosEspecificos;
+    private String[] objetivos;
     private List<AtividadeCalendario> calendarioAtividades;
     private String metodologia;
     private String[] atividades;
     private String sistemaAvaliacao;
-    private List<MaterialEstudo> bibliografiaBasica;
-    private List<MaterialEstudo> bibliografiaComplementar;
+    private List<MaterialEstudo> bibliografia;
     private String nomeProfessor;
 
     public AnoSemestre getAnoSemestre() {return anoSemestre;}
@@ -31,31 +29,19 @@ public class PlanoDeEnsino {
         this.ementa = ementa;
     }
 
-    public String getObjetivosGerais() {
+    public String getObjetivos() {
         String s = "";
-        for(int i = 0; i < objetivosGerais.length; i++) {
+        for(int i = 0; i < objetivos.length; i++) {
             s += "- ";
-            s += objetivosGerais[i];
+            s += objetivos[i];
             s += "/n";
         }
         return s;
     }
-    public void setObjetivosGerais(String[] objetivosGerais) {
-        this.objetivosGerais = objetivosGerais;
+    public void setObjetivos(String[] objetivos) {
+        this.objetivos = objetivos;
     }
 
-    public String getObjetivosEspecificos() {
-        String s = "";
-        for(int i = 0; i < objetivosEspecificos.length; i++) {
-            s += "- ";
-            s += objetivosEspecificos[i];
-            s += "/n";
-        }
-        return s;
-    }
-    public void setObjetivosEspecificos(String[] objetivosEspecificos) {
-        this.objetivosEspecificos = objetivosEspecificos;
-    }
 
     public List<AtividadeCalendario> getCalendarioAtividades() {return calendarioAtividades;}
     public void setCalendarioAtividades(List<AtividadeCalendario> calendarioAtividades) {
@@ -85,28 +71,16 @@ public class PlanoDeEnsino {
         this.sistemaAvaliacao = sistemaAvaliacao;
     }
 
-    public String getBibliografiaBasica() {
+    public String getBibliografia() {
         String s = "";
-        for(int i = 0; i < bibliografiaBasica.size(); i++) {
-            s += bibliografiaBasica.get(i).toString();
+        for(int i = 0; i < bibliografia.size(); i++) {
+            s += bibliografia.get(i).toString();
             s += "/n";
         }
         return s;
     }
-    public void setBibliografiaBasica(List<MaterialEstudo> bibliografiaBasica) {
-        this.bibliografiaBasica = bibliografiaBasica;
-    }
-
-    public String getBibliografiaComplementar() {
-        String s = "";
-        for(int i = 0; i < bibliografiaComplementar.size(); i++) {
-            s += bibliografiaComplementar.get(i).toString();
-            s += "/n";
-        }
-        return s;
-    }
-    public void setBibliografiaComplementar(List<MaterialEstudo> bibliografiaComplementar) {
-        this.bibliografiaComplementar = bibliografiaComplementar;
+    public void setBibliografia(List<MaterialEstudo> bibliografia) {
+        this.bibliografia = bibliografia;
     }
 
     public String getNomeProfessor() {

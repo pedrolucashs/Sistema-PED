@@ -8,14 +8,10 @@ public class Disciplina {
     private String regimeOferta;
     private String estruturaCurricular;
     private int cargaHoraria;
-    private String[] preRequisitos;
-    private String[] coRequisitos;
-    private String[] equivalencias;
-    private String[] cursos;
 
     public Disciplina(String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                       String caraterDisciplina, String regimeOferta, String estruturaCurricular,
-                      int cargaHoraria, String[] preRequisitos, String[] cursos) {
+                      int cargaHoraria) {
         setUnidade(nomeUnidade);
         setCodigo(codigoDisciplina);
         setNomeDisciplina(nomeDisciplina);
@@ -23,8 +19,6 @@ public class Disciplina {
         setRegimeOferta(regimeOferta);
         setEstruturaCurricular(estruturaCurricular);
         setCargaHoraria(cargaHoraria);
-        setPreRequisitos(preRequisitos);
-        setCursos(cursos);
     }
 
     public String getUnidade() {
@@ -64,27 +58,5 @@ public class Disciplina {
     }
     public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
-    }
-
-    public String[] getPreRequisitos() {return preRequisitos;}
-    public void setPreRequisitos(String[] preRequisitos) {
-        this.preRequisitos = preRequisitos;
-    }
-
-    public String[] getCoRequisitos() {return coRequisitos;}
-    public void setCoRequisitos(String[] coRequisitos) {
-        this.coRequisitos = coRequisitos;
-    }
-
-    public String[] getEquivalencias() {return equivalencias;}
-    public void setEquivalencias(String[] equivalencias) {
-        this.equivalencias = equivalencias;
-    }
-
-    public String[] getCursos() {
-        return cursos;
-    }
-    public void setCursos(String[] cursos) {
-        this.cursos = cursos;
     }
 }

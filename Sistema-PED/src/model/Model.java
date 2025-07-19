@@ -169,7 +169,7 @@ public class Model {
 
     public boolean cadastrarTurma(String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
-                                  int cargaHoraria, String[] preRequisitos, String[] cursos) {
+                                  int cargaHoraria) {
         if (codigoTurma == null || codigoTurma.trim().isEmpty() ||
                 codigoDisciplina == null || codigoDisciplina.trim().isEmpty() ||
                 nomeUnidade == null || nomeUnidade.trim().isEmpty() || nomeDisciplina == null || nomeDisciplina.trim().isEmpty() || cargaHoraria <= 0){
@@ -181,7 +181,7 @@ public class Model {
         }
 
         Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
-                                               regimeOferta, estruturaCurricular, cargaHoraria, preRequisitos, cursos);
+                                               regimeOferta, estruturaCurricular, cargaHoraria);
         Turma novaTurma = new Turma(codigoTurma, disciplina);
         listaDeCampus.get(nomeUnidade).getTurmas().put(codigoTurma, novaTurma);
         return true;
@@ -192,17 +192,13 @@ public class Model {
         String s = String.format("PLANO DE ENSINO");
         s+= String.format("1.IDENTIFICAÇÃO");
         s+= String.format("1.1 UNIDADE: " + nomeUnidade);
-        s+= String.format("1.2 CURSOS: " + turma.getDisciplina().getCursos());
-        s+= String.format("1.3 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular());
-        s+= String.format("1.4 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina());
-        s+= String.format("1.5 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo());
-        s+= String.format("1.6 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina());
-        s+= String.format("1.7 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta());
-        s+= String.format("1.8 CARGA HORÁRIA: %d", turma.getDisciplina().getCargaHoraria());
-        s+= String.format("1.9 PRÉ-REQUISITOS: " + turma.getDisciplina().getPreRequisitos());
-        s+= String.format("1.10 CO-REQUISITOS: " + turma.getDisciplina().getCoRequisitos());
-        s+= String.format("1.11 EQUIVALENCIAS: " + turma.getDisciplina().getEquivalencias());
-        s+= String.format("1.12 PROFESSOR: " + turma.getPlano().getNomeProfessor());
+        s+= String.format("1.2 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular());
+        s+= String.format("1.3 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina());
+        s+= String.format("1.4 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo());
+        s+= String.format("1.5 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina());
+        s+= String.format("1.6 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta());
+        s+= String.format("1.7 CARGA HORÁRIA: %d", turma.getDisciplina().getCargaHoraria());
+        s+= String.format("1.8 PROFESSOR: " + turma.getPlano().getNomeProfessor());
         s += String.format("/n/n");
         s += String.format("2. JUSTIFICATIVA");
         s += String.format(turma.getPlano().getJustificativa());
@@ -210,12 +206,8 @@ public class Model {
         s += String.format("3. EMENTA");
         s += String.format(turma.getPlano().getEmenta());
         s += String.format("/n/n");
-        s += String.format("4. OBJETIVOS - GERAL E ESPECÍFICOS");
-        s += String.format("OBJETIVOS GERAIS:");
-        s += String.format(turma.getPlano().getObjetivosGerais());
-        s += String.format("/n");
-        s += String.format("OBJETIVOS ESPECÍFICOS:");
-        s += String.format(turma.getPlano().getObjetivosEspecificos());
+        s += String.format("4. OBJETIVOS");
+        s += String.format(turma.getPlano().getObjetivos());
         s += String.format("/n/n");
         s += String.format("5. CALENDÁRIO DE ATIVIDADES");
         s += String.format("/n/n");
@@ -228,12 +220,8 @@ public class Model {
         s += String.format("8. SISTEMA DE AVALIAÇÃO");
         s += String.format(turma.getPlano().getSistemaAvaliacao());
         s += String.format("/n/n");
-        s += String.format("9. BIBLIOGRAFIA BÁSICA E COMPLEMENTAR");
-        s += String.format("BIBLIOGRAFIA BÁSICA:");
-        s += String.format(turma.getPlano().getBibliografiaBasica());
-        s += String.format("/n");
-        s += String.format("BIBLIOGRAFIA COMPLEMENTAR:");
-        s += String.format(turma.getPlano().getBibliografiaComplementar());
+        s += String.format("9. BIBLIOGRAFIA");
+        s += String.format(turma.getPlano().getBibliografia());
         s += String.format("/n/n");
 
         return s;
