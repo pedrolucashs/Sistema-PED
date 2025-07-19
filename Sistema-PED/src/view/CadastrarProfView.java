@@ -28,9 +28,9 @@ public class CadastrarProfView implements Observer{
         System.out.println();
         System.out.print("Nome: ");
         nome = sc.nextLine();
-        System.out.print("Id: ");
+        System.out.print("Número de Identificação: ");
         id = sc.nextLine();
-        System.out.print("Login: ");
+        System.out.print("Nome de Usuário: ");
         login = sc.nextLine();
         System.out.print("Senha: ");
         senha = sc.nextLine();
@@ -53,5 +53,11 @@ public class CadastrarProfView implements Observer{
 
     public void update() {
 
+    }
+
+    public void exibeMSG(String msg) {
+        System.out.println();
+        System.out.println(msg);
+        System.out.println();
     }
 }

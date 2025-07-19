@@ -15,7 +15,12 @@ public class CadastrarProfController implements Observer {
     public void handleEvent(String event) {
         switch (event) {
             case "OK" :
-                model.setUsuario(view.getNome(), view.getId(), view.getLogin(),view.getSenha());
+                boolean cadastrado = model.setUsuario(view.getNome(), view.getId(), view.getLogin(),view.getSenha());
+                if(cadastrado){
+                    view.exibeMSG("SUCESSO: Professor cadastrado!");
+                } else{
+                    view.exibeMSG("ERRO: Esse nome de usuário já está sendo usado.");
+                }
                 model.detachObserver(this);
                 break;
         }

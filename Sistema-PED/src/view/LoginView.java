@@ -26,7 +26,7 @@ public class LoginView implements Observer {
         System.out.println("   TELA DE LOGIN");
         System.out.println("=====================");
         System.out.println();
-        System.out.print("Login: ");
+        System.out.print("Nome de Usuário: ");
         login = sc.nextLine();
         System.out.print("Senha: ");
         senha = sc.nextLine();
