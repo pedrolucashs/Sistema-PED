@@ -3,13 +3,14 @@ package view_controller;
 import model.Model;
 import java.util.Scanner;
 
-public class EditarTurmaController implements Observer {
+public class ExcluirTurmaController implements Observer {
     private Model model;
     private ExcluirTurmaView view;
 
     public void init(Model model, ExcluirTurmaView view) {
         this.model = model;
         this.view = view;
+        model.attachObserver(this);
     }
 
     public void handleEvent(String event) {
@@ -41,6 +42,5 @@ public class EditarTurmaController implements Observer {
     }
 
     public void update(){
-
     }
 }

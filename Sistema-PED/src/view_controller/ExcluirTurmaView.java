@@ -14,10 +14,11 @@ public class ExcluirTurmaView implements Observer {
             controller = new ExcluirTurmaController();
             controller.init(model, this);
             model.attachObserver(this);
-            ExcluirTurma();
+            excluirTurma();
         }
+    }
 
-    public void ExcluirTurma() {
+    public void excluirTurma() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o código da Turma: ");
         codigoTurma = sc.nextLine();
