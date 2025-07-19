@@ -1,5 +1,5 @@
 import model.*;
-import view_controller.*;
+import view.*;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,28 +1,32 @@
 package model;
 
-import java.util.List;
+import java.util.HashMap;
 
-public class Professor extends Usuario{
-    private int id;
-    private List<Turma> turmas;
+public class Professor extends Usuario {
+    private HashMap<String, Turma> turmas;
+    private Campus campus;
 
-    public Professor(String nome, String login, String senha, int id) {
-        super(nome, login, senha);
-        setId(id);
+    public Professor(String nome, String id, String login, String senha, Campus campus) {
+        super(nome, id, login, senha);
+        setTurmas(new HashMap<String,Turma>());
+        setCampus(campus);
     }
 
-    public int getId(){ return id; }
-    public void setId(int id) {
-        if (id > 0) {
-            this.id = id;
-        }
+    public HashMap<String, Turma> getTurmas() {
+        return turmas;
     }
-
-    public List<Turma> getTurmas(){return turmas;}
-    public void setTurmas(List<Turma> turmas){
-        if (turmas != null) {
+    public void setTurmas(HashMap<String, Turma> turmas) {
+        if(turmas != null) {
             this.turmas = turmas;
         }
     }
 
+    public Campus getCampus() {
+        return campus;
+    }
+    public void setCampus(Campus campus) {
+        if(campus != null) {
+            this.campus = campus;
+        }
+    }
 }

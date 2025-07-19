@@ -2,14 +2,17 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import view_controller.*;
+import view.*;
 
 public class Model {
     private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();
-    private Usuario usuarioAutenticado;	//
+    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();
+    private Usuario usuarioAutenticado;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     private static Model instanciaUnica;
+    private static Admin adminPadrao;
+    private static Campus campusPadrao;
 
     private Model(){
         super();
@@ -18,6 +21,12 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Password");
+            campusPadrao = new Campus("Russas", new HashMap<String, Turma>(), new HashMap<String, Professor>());
+            adminPadrao.setUnidade(campusPadrao);
+
+            instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
+            instanciaUnica.listaDeCampus.put(campusPadrao.getNomeUnidade(), campusPadrao);
         }
         return instanciaUnica;
     }
@@ -45,11 +54,19 @@ public class Model {
         return "";
     }
 
-    public void setUsuario(String nome, String login, String senha, int id) {
-        if (nome != null && login != null && senha != null) {
-            usuarios.put(login, new Professor(nome, login, senha, id));
+    public boolean setUsuario(String nome, String id, String login, String senha) {
+        if (nome != null && login != null && senha != null && id != null) {
+            if(usuarios.containsKey(login)){
+                return false;
+            }
+            Admin admin = (Admin) usuarioAutenticado;
+            Professor novoProfessor = new Professor(nome, id, login, senha, admin.getUnidade());
+            usuarios.put(login, novoProfessor);
+            admin.getUnidade().getProfessores().put(id, novoProfessor);
             notifica();
+            return true;
         }
+        return false;
     }
 
     public boolean autenticarUsuario(String login, String senha) {
@@ -81,6 +98,10 @@ public class Model {
         }
     }
 
+    public int getTotalUsuarios() {
+        return usuarios.size();
+    }
+
     public void attachObserver(Observer observer) {
         if (observer != null) {
             observers.add(observer);
@@ -93,7 +114,186 @@ public class Model {
         }
     }
 
-    public int getTotalUsuarios() {
-        return usuarios.size();
+    private Turma getTurma(String codigoTurma, String nomeUnidade) {
+        if(listaDeCampus.containsKey(nomeUnidade)){
+            Campus campus = listaDeCampus.get(nomeUnidade);
+            if(campus.getTurmas().containsKey(codigoTurma)){
+                return campus.getTurmas().get(codigoTurma);
+            }
+        }
+        return null;
+    }
+
+    public boolean existePED(String codigoTurma, String nomeUnidade){
+        if(getTurma(codigoTurma,nomeUnidade) != null){
+            Turma turma = getTurma(codigoTurma,nomeUnidade);
+            if(turma.getPlano() != null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void sistemaIniciado(){
+        notifica();
+    }
+
+    public String getTipoUsuario() {
+        if (usuarioAutenticado != null) {
+            String tipoUsuario = "";
+            if(usuarioAutenticado instanceof Admin){
+                tipoUsuario = "Admin";
+            } else if (usuarioAutenticado instanceof Professor){
+                tipoUsuario = "Professor";
+            }
+            return tipoUsuario;
+        }
+        return "";
+    }
+
+    public String getCampus(){
+        if(usuarioAutenticado != null && usuarioAutenticado instanceof Admin){
+            Admin adminLogado = (Admin) usuarioAutenticado;
+            String nomeUnidade = adminLogado.getUnidade().getNomeUnidade();
+            return nomeUnidade;
+        } else if(usuarioAutenticado != null && usuarioAutenticado instanceof Professor){
+            Professor prof = (Professor) usuarioAutenticado;
+            String nomeUnidade = prof.getCampus().getNomeUnidade();
+            return nomeUnidade;
+        }
+        return "";
+    }
+
+    public boolean existeTurmaAdmin(String codigoTurma){
+        Admin admin = (Admin) usuarioAutenticado;
+        if(admin.getUnidade().getTurmas().containsKey(codigoTurma)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean existeTurmaProf(String codigoTurma){
+        Professor prof = (Professor) usuarioAutenticado;
+        if(prof.getTurmas().containsKey(codigoTurma)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean existeProfessor(String idProfessor){
+        Admin admin = (Admin) usuarioAutenticado;
+        if (admin.getUnidade().getProfessores().containsKey(idProfessor)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
+                                  String caraterDisciplina, String regimeOferta, String estruturaCurricular,
+                                  int cargaHoraria) {
+        if (idProfessor == null || idProfessor.trim().isEmpty() || codigoTurma == null || codigoTurma.trim().isEmpty() ||
+                codigoDisciplina == null || codigoDisciplina.trim().isEmpty() ||
+                nomeUnidade == null || nomeUnidade.trim().isEmpty() || nomeDisciplina == null || nomeDisciplina.trim().isEmpty() || cargaHoraria <= 0){
+            return false;
+        }
+
+        if(!existeProfessor(idProfessor)){
+            return false;
+        }
+
+        if(!existeTurmaAdmin(codigoTurma)){
+            return false;
+        }
+
+        Admin admin = (Admin) usuarioAutenticado;
+        Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
+                                               regimeOferta, estruturaCurricular, cargaHoraria);
+        Turma novaTurma = new Turma(codigoTurma, disciplina, admin.getUnidade().getProfessores().get(idProfessor).getNome());
+        admin.getUnidade().getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
+        admin.getUnidade().getTurmas().put(codigoTurma, novaTurma);
+        return true;
+    }
+
+    public String getPlanoDeEnsino(String codigoTurma, String nomeUnidade){
+        Turma turma = getTurma(codigoTurma, nomeUnidade);
+        String s = String.format("PLANO DE ENSINO");
+        s+= String.format("1.IDENTIFICAÇÃO");
+        s+= String.format("1.1 UNIDADE: " + nomeUnidade);
+        s+= String.format("1.2 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular());
+        s+= String.format("1.3 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina());
+        s+= String.format("1.4 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo());
+        s+= String.format("1.5 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina());
+        s+= String.format("1.6 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta());
+        s+= String.format("1.7 CARGA HORÁRIA: %d", turma.getDisciplina().getCargaHoraria());
+        s+= String.format("1.8 PROFESSOR: " + turma.getPlano().getNomeProfessor());
+        s += String.format("/n/n");
+        s += String.format("2. JUSTIFICATIVA");
+        s += String.format(turma.getPlano().getJustificativa());
+        s += String.format("/n/n");
+        s += String.format("3. EMENTA");
+        s += String.format(turma.getPlano().getEmenta());
+        s += String.format("/n/n");
+        s += String.format("4. OBJETIVOS");
+        s += String.format(turma.getPlano().getObjetivos());
+        s += String.format("/n/n");
+        s += String.format("5. CALENDÁRIO DE ATIVIDADES");
+        s += String.format("/n/n");
+        s += String.format("6. METODOLOGIA DE ENSINO");
+        s += String.format(turma.getPlano().getMetodologia());
+        s += String.format("/n/n");
+        s += String.format("7. ATIVIDADES DISCENTES");
+        s += String.format(turma.getPlano().getAtividades());
+        s += String.format("/n/n");
+        s += String.format("8. SISTEMA DE AVALIAÇÃO");
+        s += String.format(turma.getPlano().getSistemaAvaliacao());
+        s += String.format("/n/n");
+        s += String.format("9. BIBLIOGRAFIA");
+        s += String.format(turma.getPlano().getBibliografia());
+        s += String.format("/n/n");
+
+        return s;
+    }
+
+    public boolean existeTurmas() {
+        if(usuarioAutenticado != null){
+            if(usuarioAutenticado instanceof Professor){
+                Professor prof = (Professor) usuarioAutenticado;
+                if (prof.getTurmas() != null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String getTurmas() {
+        if(usuarioAutenticado != null){
+            if(usuarioAutenticado instanceof Professor){
+                Professor prof = (Professor) usuarioAutenticado;
+                if (prof.getTurmas() != null){
+                    String resultado = "";
+                    resultado += "Lista de Turmas:\n\n";
+                    for (HashMap.Entry<String, Turma> entrada : prof.getTurmas().entrySet()) {
+                        Turma turma = entrada.getValue();
+                        resultado += turma.toString() + "\n";
+                    }
+                    return resultado;
+                }
+            }
+        }
+        return "";
+    }
+
+    public String getTurmaEscolhida(String codigoTurma){
+        if(usuarioAutenticado != null){
+            if(usuarioAutenticado instanceof Professor){
+                Professor prof = (Professor) usuarioAutenticado;
+                if (prof.getTurmas() != null){
+                    String resultado = "";
+                    resultado += prof.getTurmas().get(codigoTurma).toString();
+                }
+            }
+        }
+        return "";
     }
 }

@@ -1,11 +1,13 @@
-package view_controller;
+package view;
 
+import controller.LoginController;
 import model.Model;
-import java.util.*;
+
+import java.util.Scanner;
 
 public class LoginView implements Observer {
-    private Model model;
-    private LoginController controller;
+    Model model;
+    LoginController controller;
     private String login;
     private String senha;
 
@@ -20,11 +22,11 @@ public class LoginView implements Observer {
     public void logarUsuario() {
         Scanner sc = new Scanner(System.in);
         System.out.println();
-        System.out.println("======================");
-        System.out.println("    TELA DE LOGIN     ");
-        System.out.println("======================");
+        System.out.println("=====================");
+        System.out.println("   TELA DE LOGIN");
+        System.out.println("=====================");
         System.out.println();
-        System.out.print("Login: ");
+        System.out.print("Nome de Usuário: ");
         login = sc.nextLine();
         System.out.print("Senha: ");
         senha = sc.nextLine();
@@ -32,21 +34,16 @@ public class LoginView implements Observer {
         model.detachObserver(this);
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void update() {
-
-    }
-
     public void exibeMSG(String msg) {
         System.out.println();
         System.out.println(msg);
         System.out.println();
     }
+
+    public void update(){
+
+    }
+
+    public String getLogin() {return login;}
+    public String getSenha() {return senha;}
 }

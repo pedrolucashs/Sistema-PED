@@ -2,11 +2,13 @@ package model;
 
 public class Usuario {
     private String nome;
+    private String id;
     private String login;
     private String senha;
 
-    public Usuario(String nome, String login, String senha){
+    public Usuario(String nome, String id, String login, String senha){
         setNome(nome);
+        setId(id);
         setLogin(login);
         setSenha(senha);
     }
@@ -39,6 +41,13 @@ public class Usuario {
         if (senha != null) {
             this.senha = senha;
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String toString() {
