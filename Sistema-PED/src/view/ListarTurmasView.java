@@ -17,7 +17,7 @@ public class ListarTurmasView implements Observer {
     public void init(Model model){
         this.model = model;
         controller = new ListarTurmasController();
-        controller.init(model, this);//fazer o controller dessa view
+        controller.init(model, this);
         model.attachObserver(this);
         listarTurmas();
     }

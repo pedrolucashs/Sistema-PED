@@ -19,10 +19,13 @@ public class ListarTurmasController implements Observer {
         String codigoTurma = view.getCodigoTurma();
         switch(evento){
             case "1":
-                if(model.existeTurma(codigoTurma)){
-
+                if(model.existeTurmaProf(codigoTurma)){
+                    view.exibeMSG("SUCESSO: Turma encontrada!");
+                    TurmaEscolhidaView view2 = new TurmaEscolhidaView();
+                    view2.init(model, codigoTurma);
+                } else{
+                    view.exibeMSG("ERRO: Turma não encontrada");
                 }
-                TurmaEscolhidaView view1 = new TurmaEscolhidaView();
                 model.detachObserver(this);
                 break;
             case "2":

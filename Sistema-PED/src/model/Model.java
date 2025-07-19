@@ -59,9 +59,9 @@ public class Model {
             if(usuarios.containsKey(login)){
                 return false;
             }
-            Professor novoProfessor = new Professor(nome, id, login, senha);
-            usuarios.put(login, novoProfessor);
             Admin admin = (Admin) usuarioAutenticado;
+            Professor novoProfessor = new Professor(nome, id, login, senha, admin.getUnidade());
+            usuarios.put(login, novoProfessor);
             admin.getUnidade().getProfessores().put(id, novoProfessor);
             notifica();
             return true;
@@ -156,13 +156,25 @@ public class Model {
             Admin adminLogado = (Admin) usuarioAutenticado;
             String nomeUnidade = adminLogado.getUnidade().getNomeUnidade();
             return nomeUnidade;
+        } else if(usuarioAutenticado != null && usuarioAutenticado instanceof Professor){
+            Professor prof = (Professor) usuarioAutenticado;
+            String nomeUnidade = prof.getCampus().getNomeUnidade();
+            return nomeUnidade;
         }
         return "";
     }
 
-    public boolean existeTurma(String codigoTurma){
+    public boolean existeTurmaAdmin(String codigoTurma){
         Admin admin = (Admin) usuarioAutenticado;
         if(admin.getUnidade().getTurmas().containsKey(codigoTurma)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean existeTurmaProf(String codigoTurma){
+        Professor prof = (Professor) usuarioAutenticado;
+        if(prof.getTurmas().containsKey(codigoTurma)){
             return true;
         }
         return false;
@@ -189,7 +201,7 @@ public class Model {
             return false;
         }
 
-        if(!existeTurma(codigoTurma)){
+        if(!existeTurmaAdmin(codigoTurma)){
             return false;
         }
 
@@ -266,6 +278,19 @@ public class Model {
                         resultado += turma.toString() + "\n";
                     }
                     return resultado;
+                }
+            }
+        }
+        return "";
+    }
+
+    public String getTurmaEscolhida(String codigoTurma){
+        if(usuarioAutenticado != null){
+            if(usuarioAutenticado instanceof Professor){
+                Professor prof = (Professor) usuarioAutenticado;
+                if (prof.getTurmas() != null){
+                    String resultado = "";
+                    resultado += prof.getTurmas().get(codigoTurma).toString();
                 }
             }
         }
