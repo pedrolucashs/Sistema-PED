@@ -1,43 +1,47 @@
 package view;
-import java.util.*;
-import model.*;
+import model.Model;
+import controller.TurmaEscolhidaController;
+import java.util.Scanner;
 
-public class TurmaEscolhidaView implements Observer {
+public class TurmaEscolhidaView implements Observer{
     private Model model;
     private TurmaEscolhidaController controller;
+    private String codigoTurma;
+    private boolean finalizar = false;
 
-    public void init(Model model) {
+    public void finalizar(){
+        finalizar = true;
+    }
+
+    public void init(Model model, String codigoTurma){
         this.model = model;
+        this.codigoTurma = codigoTurma;
         controller = new TurmaEscolhidaController();
-        controller.init(model,this);
+        controller.init(model, this);
         model.attachObserver(this);
         turmaEscolhida();
     }
 
-    public void turmaEscolhida() {
+    public void turmaEscolhida(){
         Scanner sc = new Scanner(System.in);
-        String opcao[] = {"[1] editar plano de ensino" , "[2]visualizar plano de ensino"};
-        System.out.printf("               TURMA %s               ",model.getTurmaEscolhida().getCodigoTurma());
-        System.out.println("-------------------------------------------------");
-        System.out.println(model.getTurmaEscolhida().getDisciplina());
-        System.out.println();
-        System.out.printf("Plano de Ensino:",model.getTurmaEscolhida().isPlanodeEnsino());
-        if(!model.getTurmaEscolhida().isPlanodeEnsino()) {
-            opcao[0] = "[1] criar plano de ensino";
-            opcao[1] = null;
-        }
-        System.out.println(opcao[0]);
-        System.out.println(opcao[2]);
-        System.out.println("escolha uma opção");
-        String event = sc.nextLine();
-        controller.handleEvent(event);
+        String opcoes[] = {"[1] - Editar Plano de Ensino da turma" , "[2] - Visualizar Plano de Ensino da turma", "[0] - Voltar"};
+        do{
+            System.out.println(model.getTurmaEscolhida(codigoTurma));
+            System.out.println(opcoes[0]);
+            System.out.println(opcoes[1]);
+            System.out.println(opcoes[2]);
+            System.out.print("Digite a opçÕo desejada: ");
+            String event = sc.nextLine();
+            controller.handleEvent(event);
+        } while(!finalizar);
         model.detachObserver(this);
     }
 
-    public String exibirMsg(String msg) {
-        return String.format(msg);
-    }
-    public void update() {
+    public void update(){
 
+    }
+
+    public String getCodigoTurma() {
+        return codigoTurma;
     }
 }

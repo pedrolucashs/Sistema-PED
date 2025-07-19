@@ -1,30 +1,36 @@
 package model;
 
-import java.util.*;
+import java.util.HashMap;
 
-public class Professor extends Usuario{
-    private int id;
-    private HashMap<String,Turma> turmas;
+public class Professor extends Usuario {
+    private HashMap<String, Turma> turmas;
+    private Campus campus;
 
-    public Professor(String nome, String login, String senha, int id) {
-        setNome(nome);
-        setLogin(login);
-        setSenha(senha);
-        setId(id);
+    public Professor(String nome, String id, String login, String senha, Campus campus) {
+        super(nome, id, login, senha);
+        setTurmas(new HashMap<String,Turma>());
+        setCampus(campus);
     }
-    public Professor(){
-        super();
-    }
-    public void setId(int id){
-        this.id = id;
-    }
-    public int getId(){
-        return id;
-    }
-    public  void setTurmas( Turma turma){
-        turmas.put(turma.getCodigoTurma(), turma);
-    }
-    public HashMap<String, Turma> getTurmas(){
+
+    public HashMap<String, Turma> getTurmas() {
         return turmas;
+    }
+    public void setTurmas(HashMap<String, Turma> turmas) {
+        if(turmas != null) {
+            this.turmas = turmas;
+        }
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+    public void setCampus(Campus campus) {
+        if(campus != null) {
+            this.campus = campus;
+        }
+    }
+
+    public String toString(){
+        return String.format("nome: %s\nLogin: %s\nId: %s",getNome(),getLogin(),getId());
     }
 }

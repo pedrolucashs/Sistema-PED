@@ -3,13 +3,13 @@ package model;
 public class Turma {
     private String codigoTurma;
     private Disciplina disciplina;
-    private PlanoDeEnsino plano = new PlanoDeEnsino();
+    private PlanoDeEnsino plano;
 
-
-    public void setPlano(PlanoDeEnsino plano){
-        this.plano = plano;
+    public Turma(String codigoTurma, Disciplina disciplina, String nomeProfessor) {
+        setCodigoTurma(codigoTurma);
+        setDisciplina(disciplina);
+        setPlano(new PlanoDeEnsino(nomeProfessor));
     }
-    public PlanoDeEnsino getPlano(){return plano;}
 
     public String getCodigoTurma() {return codigoTurma;}
 
@@ -17,7 +17,9 @@ public class Turma {
         this.codigoTurma = codigoTurma;
     }
 
-    public Disciplina getDisciplina() {return disciplina;}
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
 
     public void setDisciplina(Disciplina disciplina) {
         if(disciplina != null) {
@@ -25,14 +27,20 @@ public class Turma {
         }
     }
 
-    public boolean isPlanodeEnsino() {
-        if(this.plano != null) {
-            return true;
+    public PlanoDeEnsino getPlano() {
+        return plano;
+    }
+
+    public void setPlano(PlanoDeEnsino plano) {
+        if(plano != null) {
+            this.plano = plano;
         }
-        return false;
     }
 
     public String toString() {
-        return String.format("Codigo da Turma: %s\nDisciplina: %s", codigoTurma, disciplina.getNomeDisciplina());
+        String retorno = String.format("Código da Turma: %s\nCampus: %s\nNome da Disciplina: %s\nCaráter da Disciplina: %s\nRegime de Oferta: %s\nCarga Horária: %d",
+                getCodigoTurma(), getDisciplina().getUnidade(), getDisciplina().getNomeDisciplina(), getDisciplina().getCaraterDisciplina(),
+                getDisciplina().getRegimeOferta(), getDisciplina().getCargaHoraria());
+        return retorno;
     }
 }

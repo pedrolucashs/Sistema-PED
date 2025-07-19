@@ -1,25 +1,37 @@
 package model;
-
-import java.util.List;
+import java.util.HashMap;
 
 public class Campus {
     private String nomeUnidade;
-    private List<String> cursos ;
+    private HashMap<String, Professor> professores;
+    private HashMap<String, Turma> turmas;
 
-    public List<String> getCursos() {
-        return cursos;
+    public Campus(String nomeUnidade, HashMap<String, Turma> turmas, HashMap<String, Professor> professores) {
+        setNomeUnidade(nomeUnidade);
+        setTurmas(turmas);
+        setProfessores(professores);
     }
-    public void setCursos(List<String> cursos) {
-        this.cursos = cursos;
-    }
+
     public String getNomeUnidade() {return nomeUnidade;}
-
     public void setNomeUnidade(String nomeUnidade) {
         this.nomeUnidade = nomeUnidade;
     }
 
-    public String toString() {
-        return String.format("%s",getNomeUnidade());
+    public HashMap<String, Professor> getProfessores() {
+        return professores;
+    }
+    public void setProfessores(HashMap<String, Professor> professores) {
+        if (professores != null) {
+            this.professores = professores;
+        }
     }
 
+    public HashMap<String, Turma> getTurmas() {
+        return turmas;
+    }
+    public void setTurmas(HashMap<String, Turma> turmas) {
+        if(turmas != null) {
+            this.turmas = turmas;
+        }
+    }
 }

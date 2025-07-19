@@ -1,24 +1,21 @@
-package view;
+package controller;
 //importando a classe Model e outros necessarios
-import model.*;
-
-import java.util.Observable;
+import model.Model;
+import view.*;
 
 //essa classe é um controller da tela inicial para professor com as opções que ele tem disponivel
 // essa classe implementa o observerr
-public class TelaProfessorController implements Observer {
+public class ProfessorController implements Observer {
     private Model model;
-    private TelaProfessorView view;
+    private ProfessorView view;
 
-//iniciando a view com o metodo "init"
-    public void init(Model model, TelaProfessorView view) {
+    //iniciando a view com o metodo "init"
+    public void init(Model model, ProfessorView view) {
         if (model != null && view != null){
             this.model = model;
             this.view = view;
             //isso registra esse controller como um observador do model
             model.attachObserver(this);
-            //"pega" o usuario autenticado
-            String l = model.getUsuarioAutenticado();
         }
     }
     // metodo para tratar eventos, (qualquer evento que o usuario causar)
@@ -26,20 +23,23 @@ public class TelaProfessorController implements Observer {
         //isso fara com que o sistema tenha um comportamento diferente dependendo da escolha do usuario
         switch (event){
             case "1":
-                if(model.getTurmasProf() != null){
-                    ListaTurmasProfView view6 = new ListaTurmasProfView();
-                    view6.init(model);}
+                if(model.existeTurmas()){
+                    ListarTurmasView view2 = new ListarTurmasView();
+                    view2.init(model);
+                }
                 else{
-                    view.exibirMensagem("nao possui turmas cadastradas ");
+                    view.exibirMensagem("Não possui turmas cadastradas ");
                 }
                 break;
-            case "2":view.finalizarSistema();
+            case "2":
+                model.deslogarUsuario();
+                view.finalizar();
                 break;
         }
         //apos o evento ser tratado , remove esse controller como observador
         model.detachObserver(this);
     }
-//metodo obrigatorio da interface Observer,porem nao implementado
+    //metodo obrigatorio da interface Observer,porem nao implementado
     public void update() {
 
     }
