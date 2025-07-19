@@ -201,7 +201,7 @@ public class Model {
             return false;
         }
 
-        if(!existeTurmaAdmin(codigoTurma)){
+        if(existeTurmaAdmin(codigoTurma)){
             return false;
         }
 
@@ -279,6 +279,18 @@ public class Model {
                     }
                     return resultado;
                 }
+            } else if(usuarioAutenticado instanceof Admin){
+                Admin admin = (Admin) usuarioAutenticado;
+                Campus campus = listaDeCampus.get(admin.getUnidade().getNomeUnidade());
+                if (campus.getTurmas() != null){
+                    String resultado = "";
+                    resultado += "Lista de Turmas:\n\n";
+                    for (HashMap.Entry<String, Turma> entrada : campus.getTurmas().entrySet()) {
+                        Turma turma = entrada.getValue();
+                        resultado += turma.toString() + "\n";
+                    }
+                    return resultado;
+                }
             }
         }
         return "";
@@ -295,5 +307,18 @@ public class Model {
             }
         }
         return "";
+    }
+
+    public boolean excluirTurma(String codigoTurma){
+        Admin admin = (Admin)usuarioAutenticado;
+
+        Turma turma = admin.getUnidade().getTurmas().get(codigoTurma);
+        if (turma != null) {
+            admin.getUnidade().getTurmas().remove(codigoTurma);
+            notifica();
+            return true;
+        } else {
+            return false;
+        }
     }
 }
