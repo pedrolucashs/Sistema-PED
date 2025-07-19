@@ -29,6 +29,8 @@ public class AdminController implements Observer {
             case "3":
                 break;
             case "4":
+                ExcluirProfessorView view4 = new ExcluirProfessorView();
+                view4.init(model);
                 break;
             case "5":
                 ListarTurmasView view5 = new ListarTurmasView();

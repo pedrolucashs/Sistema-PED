@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import model.exceptions.PermissaoNegadaException;
+import model.exceptions.ProfessorNaoEncontradoException;
 import view.*;
 
 public class Model {
@@ -295,5 +297,30 @@ public class Model {
             }
         }
         return "";
+    }
+
+    public boolean excluirProfessor(String idProfessor) {
+        if (!(usuarioAutenticado instanceof Admin)) {
+            throw new PermissaoNegadaException("Apenas administradores podem excluir professores.");
+        }
+
+        Admin adminLogado = (Admin) usuarioAutenticado;
+        Campus campusDoAdmin = adminLogado.getUnidade();
+
+        if (!campusDoAdmin.getProfessores().containsKey(idProfessor)) {
+            throw new ProfessorNaoEncontradoException(String.format("Professor com ID '%s' não encontrado no campus '%s'.", idProfessor, campusDoAdmin.getNomeUnidade()));
+        }
+
+        Professor professorParaExcluir = campusDoAdmin.getProfessores().get(idProfessor);
+
+        campusDoAdmin.getProfessores().remove(idProfessor);
+
+        String loginProfessor = professorParaExcluir.getLogin();
+        if (usuarios.containsKey(loginProfessor)) {
+            usuarios.remove(loginProfessor);
+        } else {
+        }
+        notifica();
+        return true;
     }
 }
