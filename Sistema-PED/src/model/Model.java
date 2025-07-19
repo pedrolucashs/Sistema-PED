@@ -21,8 +21,8 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
-            adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
-            campusPadrao = new Campus("Campus", new HashMap<String, Turma>(), new HashMap<String, Professor>());
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Password");
+            campusPadrao = new Campus("Russas", new HashMap<String, Turma>(), new HashMap<String, Professor>());
             adminPadrao.setUnidade(campusPadrao);
 
             instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
