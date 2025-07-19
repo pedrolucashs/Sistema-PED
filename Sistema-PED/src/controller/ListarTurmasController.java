@@ -16,8 +16,12 @@ public class ListarTurmasController implements Observer {
     }
 
     public void handleEvent(String evento){
+        String codigoTurma = view.getCodigoTurma();
         switch(evento){
             case "1":
+                if(model.existeTurma(codigoTurma)){
+
+                }
                 TurmaEscolhidaView view1 = new TurmaEscolhidaView();
                 model.detachObserver(this);
                 break;

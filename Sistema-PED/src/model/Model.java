@@ -22,7 +22,7 @@ public class Model {
         if (instanciaUnica == null){
             instanciaUnica = new Model();
             adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
-            campusPadrao = new Campus("Campus", new HashMap<String, Turma>(), new HashMap<Integer, Professor>());
+            campusPadrao = new Campus("Campus", new HashMap<String, Turma>(), new HashMap<String, Professor>());
             adminPadrao.setUnidade(campusPadrao);
 
             instanciaUnica.usuarios.put(adminPadrao.getLogin(), adminPadrao);
@@ -62,7 +62,7 @@ public class Model {
             Professor novoProfessor = new Professor(nome, id, login, senha);
             usuarios.put(login, novoProfessor);
             Admin admin = (Admin) usuarioAutenticado;
-            admin.getProfessores().put(id, novoProfessor);
+            admin.getUnidade().getProfessores().put(id, novoProfessor);
             notifica();
             return true;
         }
@@ -160,8 +160,9 @@ public class Model {
         return "";
     }
 
-    public boolean existeTurma(String codigoTurma, String nomeUnidade){
-        if(listaDeCampus.get(nomeUnidade).getTurmas().containsKey(codigoTurma)){
+    public boolean existeTurma(String codigoTurma){
+        Admin admin = (Admin) usuarioAutenticado;
+        if(admin.getUnidade().getTurmas().containsKey(codigoTurma)){
             return true;
         }
         return false;
@@ -169,7 +170,7 @@ public class Model {
 
     public boolean existeProfessor(String idProfessor){
         Admin admin = (Admin) usuarioAutenticado;
-        if (admin.getProfessores().containsKey(idProfessor)) {
+        if (admin.getUnidade().getProfessores().containsKey(idProfessor)) {
             return true;
         }
         return false;
@@ -188,7 +189,7 @@ public class Model {
             return false;
         }
 
-        if(!existeTurma(codigoTurma, nomeUnidade)){
+        if(!existeTurma(codigoTurma)){
             return false;
         }
 
@@ -196,8 +197,8 @@ public class Model {
                                                regimeOferta, estruturaCurricular, cargaHoraria);
         Turma novaTurma = new Turma(codigoTurma, disciplina);
         Admin admin = (Admin) usuarioAutenticado;
-        admin.getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
-        listaDeCampus.get(nomeUnidade).getTurmas().put(codigoTurma, novaTurma);
+        admin.getUnidade().getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
+        admin.getUnidade().getTurmas().put(codigoTurma, novaTurma);
         return true;
     }
 

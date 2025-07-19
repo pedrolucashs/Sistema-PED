@@ -3,10 +3,10 @@ import java.util.HashMap;
 
 public class Campus {
     private String nomeUnidade;
-    private HashMap<Integer, Professor> professores;
+    private HashMap<String, Professor> professores;
     private HashMap<String, Turma> turmas;
 
-    public Campus(String nomeUnidade, HashMap<String, Turma> turmas, HashMap<Integer, Professor> professores) {
+    public Campus(String nomeUnidade, HashMap<String, Turma> turmas, HashMap<String, Professor> professores) {
         setNomeUnidade(nomeUnidade);
         setTurmas(turmas);
         setProfessores(professores);
@@ -17,10 +17,10 @@ public class Campus {
         this.nomeUnidade = nomeUnidade;
     }
 
-    public HashMap<Integer, Professor> getProfessores() {
+    public HashMap<String, Professor> getProfessores() {
         return professores;
     }
-    public void setProfessores(HashMap<Integer, Professor> professores) {
+    public void setProfessores(HashMap<String, Professor> professores) {
         if (professores != null) {
             this.professores = professores;
         }
