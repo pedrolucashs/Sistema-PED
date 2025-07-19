@@ -22,7 +22,6 @@ public class ExcluirTurmaView implements Observer {
         System.out.println("Digite o código da Turma: ");
         codigoTurma = sc.nextLine();
 
-
         controller.handleEvent("OK");
         model.detachObserver(this);
     }
