@@ -8,7 +8,13 @@ public class EmentaView {
   public void init(Model model){
     this.model = model;
     this.controller = new EmentaController;
+    model.attachObserver(this);
+    ementa();
+  }
+
+  public void ementa(){
     
   }
+
     
 }
