@@ -14,6 +14,15 @@ public class PlanoDeEnsino {
     private List<MaterialEstudo> bibliografia;
     private String nomeProfessor;
 
+    public PlanoDeEnsino(String nomeProfessor) {
+        super();
+        setNomeProfessor(nomeProfessor);
+    }
+
+    public void editarPlano(){
+
+    }
+
     public AnoSemestre getAnoSemestre() {return anoSemestre;}
     public void setAnoSemestre(AnoSemestre anoSemestre) {
         this.anoSemestre = anoSemestre;

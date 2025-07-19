@@ -205,10 +205,10 @@ public class Model {
             return false;
         }
 
+        Admin admin = (Admin) usuarioAutenticado;
         Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
                                                regimeOferta, estruturaCurricular, cargaHoraria);
-        Turma novaTurma = new Turma(codigoTurma, disciplina);
-        Admin admin = (Admin) usuarioAutenticado;
+        Turma novaTurma = new Turma(codigoTurma, disciplina, admin.getUnidade().getProfessores().get(idProfessor).getNome());
         admin.getUnidade().getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
         admin.getUnidade().getTurmas().put(codigoTurma, novaTurma);
         return true;

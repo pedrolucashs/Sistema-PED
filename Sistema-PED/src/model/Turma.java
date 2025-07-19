@@ -5,10 +5,10 @@ public class Turma {
     private Disciplina disciplina;
     private PlanoDeEnsino plano;
 
-    public Turma(String codigoTurma, Disciplina disciplina) {
+    public Turma(String codigoTurma, Disciplina disciplina, String nomeProfessor) {
         setCodigoTurma(codigoTurma);
         setDisciplina(disciplina);
-        setPlano(new PlanoDeEnsino());
+        setPlano(new PlanoDeEnsino(nomeProfessor));
     }
 
     public String getCodigoTurma() {return codigoTurma;}

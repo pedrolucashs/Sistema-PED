@@ -17,6 +17,7 @@ public class TurmaEscolhidaController implements Observer{
         switch(event){
             case "1":
                 EditarPEDView view1 = new EditarPEDView();
+                view1.init(model, codigoTurma);
                 break;
             case "2":
                 VisualizarPEDView view2 = new VisualizarPEDView();
