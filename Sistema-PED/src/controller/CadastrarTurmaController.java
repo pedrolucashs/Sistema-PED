@@ -15,6 +15,7 @@ public class CadastrarTurmaController implements Observer {
     public void handleEvent(String event) {
         switch (event) {
             case "OK":
+                String idProfessor = view.getIdProfessor();
                 String codigoTurma = view.getCodigoTurma();
                 String codigoDisciplina = view.getCodigoDisciplina();
                 String nomeUnidade = model.getCampus();
@@ -24,7 +25,7 @@ public class CadastrarTurmaController implements Observer {
                 String estruturaCurricular = view.getEstruturaCurricular();
                 int cargaHoraria = view.getCargaHoraria();
 
-                boolean sucessoCadastro = model.cadastrarTurma(
+                boolean sucessoCadastro = model.cadastrarTurma(idProfessor,
                         codigoTurma, codigoDisciplina, nomeUnidade, nomeDisciplina,
                         caraterDisciplina, regimeOferta, estruturaCurricular,
                         cargaHoraria

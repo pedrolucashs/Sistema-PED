@@ -167,22 +167,36 @@ public class Model {
         return false;
     }
 
-    public boolean cadastrarTurma(String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
+    public boolean existeProfessor(String idProfessor){
+        Admin admin = (Admin) usuarioAutenticado;
+        if (admin.getProfessores().containsKey(idProfessor)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
                                   int cargaHoraria) {
-        if (codigoTurma == null || codigoTurma.trim().isEmpty() ||
+        if (idProfessor == null || idProfessor.trim().isEmpty() || codigoTurma == null || codigoTurma.trim().isEmpty() ||
                 codigoDisciplina == null || codigoDisciplina.trim().isEmpty() ||
                 nomeUnidade == null || nomeUnidade.trim().isEmpty() || nomeDisciplina == null || nomeDisciplina.trim().isEmpty() || cargaHoraria <= 0){
             return false;
         }
 
-        if(existeTurma(codigoTurma, nomeUnidade)){
+        if(!existeProfessor(idProfessor)){
+            return false;
+        }
+
+        if(!existeTurma(codigoTurma, nomeUnidade)){
             return false;
         }
 
         Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
                                                regimeOferta, estruturaCurricular, cargaHoraria);
         Turma novaTurma = new Turma(codigoTurma, disciplina);
+        Admin admin = (Admin) usuarioAutenticado;
+        admin.getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
         listaDeCampus.get(nomeUnidade).getTurmas().put(codigoTurma, novaTurma);
         return true;
     }

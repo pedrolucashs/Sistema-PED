@@ -8,6 +8,7 @@ public class Turma {
     public Turma(String codigoTurma, Disciplina disciplina) {
         setCodigoTurma(codigoTurma);
         setDisciplina(disciplina);
+        setPlano(new PlanoDeEnsino());
     }
 
     public String getCodigoTurma() {return codigoTurma;}

@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class CadastrarTurmaView implements Observer {
     Model model;
     CadastrarTurmaController controller;
+    private String idProfessor;
     private String codigoTurma;
     private String codigoDisciplina;
     private String nomeDisciplina;
@@ -32,6 +33,8 @@ public class CadastrarTurmaView implements Observer {
         System.out.println("   CADASTRO DE TURMA");
         System.out.println("=======================");
         System.out.println();
+        System.out.print("Digite o id do professor que ficará responsável pela turma: ");
+        idProfessor = sc.nextLine();
         System.out.print("Código da Turma: ");
         codigoTurma = sc.nextLine();
         System.out.print("Código da Disciplina: ");
@@ -71,6 +74,9 @@ public class CadastrarTurmaView implements Observer {
 
     }
 
+    public String getIdProfessor() {
+        return idProfessor;
+    }
     public String getCodigoTurma() {
         return codigoTurma;
     }

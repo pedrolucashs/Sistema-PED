@@ -19,9 +19,6 @@ public class VisualizarPEDController implements Observer {
     public void handleEvent(String event) {
         switch (event) {
             case "1":
-                view.exibeMSG("Gerando PDF");
-                break;
-            case "2":
                 view.exibeMSG("Plano de Ensino finalizado com sucesso!");
                 break;
         }

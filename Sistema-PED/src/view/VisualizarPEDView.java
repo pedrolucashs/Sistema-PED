@@ -19,7 +19,7 @@ public class VisualizarPEDView implements Observer {
     public void visualizarPED(){
         Scanner sc = new Scanner(System.in);
         controller.exibirPlanoDeEnsino();
-        System.out.println("[1] - Gerar PDF/n[2] - Voltar");
+        System.out.println("[1] - Voltar");
         String event = sc.nextLine();
         controller.handleEvent(event);
     }

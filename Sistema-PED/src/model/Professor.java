@@ -7,6 +7,7 @@ public class Professor extends Usuario {
 
     public Professor(String nome, String id, String login, String senha) {
         super(nome, id, login, senha);
+        setTurmas(new HashMap<String,Turma>());
     }
 
     public HashMap<String, Turma> getTurmas() {
