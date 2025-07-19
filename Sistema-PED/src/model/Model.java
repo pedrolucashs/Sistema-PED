@@ -220,6 +220,19 @@ public class Model {
         }
     }
 
+    public boolean editarCalendarioAtividades(String codigoTurma, List<AtividadeCalendario> novoCalendario) {
+        Admin admin = (Admin)usuarioAutenticado;
+
+        Turma turma = admin.getUnidade().getTurmas().get(codigoTurma);
+        if (turma != null) {
+            PlanoDeEnsino plano = turma.getPlanoDeEnsino();
+            plano.setCalendarioAtividades(novoCalendario);
+            notifica();
+            return true;
+        }
+        return false;
+    }
+
     public int getTotalUsuarios() {
         return usuarios.size();
     }
