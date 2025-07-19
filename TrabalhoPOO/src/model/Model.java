@@ -140,7 +140,10 @@ public class Model {
             observers.remove(observer);
         }
     }
-
+    //retorna a lista de professores do adiministrador cadastrado
+    public List<String> getProfessoresAdimin(){
+        return "";
+    }
     /*
      * Informa o total de usuários cadastrados
      */

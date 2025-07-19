@@ -15,7 +15,16 @@ public class ListaProfessoresAdminController implements Observer {
     }
 
     public void handleEvent(String event) {
-
+        switch (event){
+            case "1":
+                MainView view1 = new MainView();
+                view1.init(model);
+                break;
+            default:
+                view.exibeMSG("opção invalida");
+                break;
+        }
+        model.detachObserver(this);
     }
 
     public void update() {
