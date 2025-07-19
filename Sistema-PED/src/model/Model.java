@@ -238,4 +238,34 @@ public class Model {
 
         return s;
     }
+
+    public boolean existeTurmas() {
+        if(usuarioAutenticado != null){
+            if(usuarioAutenticado instanceof Professor){
+                Professor prof = (Professor) usuarioAutenticado;
+                if (prof.getTurmas() != null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String getTurmas() {
+        if(usuarioAutenticado != null){
+            if(usuarioAutenticado instanceof Professor){
+                Professor prof = (Professor) usuarioAutenticado;
+                if (prof.getTurmas() != null){
+                    String resultado = "";
+                    resultado += "Lista de Turmas:\n\n";
+                    for (HashMap.Entry<String, Turma> entrada : prof.getTurmas().entrySet()) {
+                        Turma turma = entrada.getValue();
+                        resultado += turma.toString() + "\n";
+                    }
+                    return resultado;
+                }
+            }
+        }
+        return "";
+    }
 }

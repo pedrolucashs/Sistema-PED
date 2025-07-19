@@ -8,7 +8,6 @@ public class MainView implements Observer {
     private Model model;
     private MainController controller;
     private int totalUsuarios;
-    private String usuarioLogado;
     private boolean finalizar = false;
 
     public void finalizarSistema() {
@@ -28,7 +27,6 @@ public class MainView implements Observer {
 
     public void update() {
         totalUsuarios = model.getTotalUsuarios();
-        usuarioLogado = model.getUsuarioLogin();
     }
 
     public void menuPrincipal() {
@@ -41,9 +39,6 @@ public class MainView implements Observer {
             System.out.println("===============================================");
             System.out.println();
             System.out.println("Total de Usuários: " + totalUsuarios);
-            if (model.getUsuarioAutenticado() != "") {
-                System.out.println("Usuário Logado: " + usuarioLogado);
-            }
             System.out.println();
             System.out.println(opcoes[0]);
             System.out.println(opcoes[1]);

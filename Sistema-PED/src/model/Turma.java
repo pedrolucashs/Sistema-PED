@@ -35,4 +35,11 @@ public class Turma {
             this.plano = plano;
         }
     }
+
+    public String toString() {
+        String retorno = String.format("Código da Turma: %s\nCampus: %s\nNome da Disciplina: %s\nCaráter da Disciplina: %s\nRegime de Oferta: %s\nCarga Horária: %d",
+                getCodigoTurma(), getDisciplina().getUnidade(), getDisciplina().getNomeDisciplina(), getDisciplina().getCaraterDisciplina(),
+                getDisciplina().getRegimeOferta(), getDisciplina().getCargaHoraria());
+        return retorno;
+    }
 }
