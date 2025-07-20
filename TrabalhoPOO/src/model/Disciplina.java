@@ -1,4 +1,5 @@
 package model;
+// Classe que representa uma disciplina com todas suas informações
 
 public class Disciplina {
     private String unidade;
