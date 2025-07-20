@@ -3,6 +3,7 @@ package controller;
 import model.Model;
 import view.*;
 
+// Controller para listar turmas
 public class ListarTurmasController implements Observer {
     private Model model;
     private ListarTurmasView view;
@@ -15,6 +16,7 @@ public class ListarTurmasController implements Observer {
         }
     }
 
+    // Quando o usuário seleciona uma turma para ver, verifica se ela existe e abre a view da turma
     public void handleEvent(String evento){
         String codigoTurma = view.getCodigoTurma();
         switch(evento){
