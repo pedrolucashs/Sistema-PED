@@ -3,6 +3,7 @@ package controller;
 import view.*;
 import model.Model;
 
+// Controller para cadastrar turma
 public class CadastrarTurmaController implements Observer {
     Model model;
     CadastrarTurmaView view;
@@ -12,6 +13,7 @@ public class CadastrarTurmaController implements Observer {
         this.view = view;
     }
 
+    // Trata evento de confirmação para cadastrar a turma com os dados coletados da view
     public void handleEvent(String event) {
         switch (event) {
             case "OK":
@@ -25,6 +27,7 @@ public class CadastrarTurmaController implements Observer {
                 String estruturaCurricular = view.getEstruturaCurricular();
                 int cargaHoraria = view.getCargaHoraria();
 
+                // Tenta cadastrar turma no model e exibe mensagem de sucesso ou erro
                 boolean sucessoCadastro = model.cadastrarTurma(idProfessor,
                         codigoTurma, codigoDisciplina, nomeUnidade, nomeDisciplina,
                         caraterDisciplina, regimeOferta, estruturaCurricular,
