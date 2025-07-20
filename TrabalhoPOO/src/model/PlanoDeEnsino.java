@@ -1,52 +1,76 @@
 package model;
 
-import java.util.List;
-// Classe que representa um plano de ensino com todas as informações relevantes para uma disciplina
-public class PlanoDeEnsino {
-  private AnoSemestre anoSemestre; // Ano e semestre em que o plano se aplica
-    private String justificativa; // Justificativa do conteúdo proposto
-    private String ementa; // Ementa da disciplina
-    private String[] objetivos; // Lista de objetivos da disciplina
-    private List<AtividadeCalendario> calendarioAtividades; // Lista de atividades organizadas no calendário
-    private String metodologia; // Metodologia de ensino utilizada
-    private String[] atividades; // Atividades que serão realizadas
-    private String sistemaAvaliacao; // Sistema de avaliação utilizado
-    private List<MaterialEstudo> bibliografia; // Lista de materiais de estudo (bibliografia)
-    private String nomeProfessor; // Nome do professor responsável
+import java.util.HashMap;
 
-    // Construtor recebendo o nome do professor
+public class PlanoDeEnsino {
+    private String anoSemestre;
+    private String justificativa;
+    private String ementa;
+    private String[] objetivos;
+    private HashMap<String, AtividadeCalendario> calendarioAtividades;
+    private String metodologia;
+    private String[] atividades;
+    private String sistemaAvaliacao;
+    private HashMap<String, MaterialEstudo> bibliografia;
+    private String nomeProfessor;
+
     public PlanoDeEnsino(String nomeProfessor) {
         super();
         setNomeProfessor(nomeProfessor);
+        setCalendarioAtividades(new HashMap<String, AtividadeCalendario>());
+        setBibliografia(new HashMap<String, MaterialEstudo>());
     }
 
-    // Método para editar o plano (ainda não implementado)
-    public void editarPlano() {
-        // Implementação futura
+    public void editarPlano(String anoSemestre, String justificativa, String ementa, String[] objetivos,
+                            String metodologia, String[] atividades, String sistemaAvaliacao) {
+        setAnoSemestre(anoSemestre);
+        setJustificativa(justificativa);
+        setEmenta(ementa);
+        setObjetivos(objetivos);
+        setMetodologia(metodologia);
+        setAtividades(atividades);
+        setSistemaAvaliacao(sistemaAvaliacao);
     }
 
-    public AnoSemestre getAnoSemestre() {return anoSemestre;}
-    public void setAnoSemestre(AnoSemestre anoSemestre) {
+    public String getAnoSemestre() {
+        if (anoSemestre == null) {
+            anoSemestre = "";
+        }
+        return anoSemestre;
+    }
+    public void setAnoSemestre(String anoSemestre) {
         this.anoSemestre = anoSemestre;
     }
 
-    public String getJustificativa() {return justificativa;}
+    public String getJustificativa() {
+        if(justificativa == null){
+            return "";
+        }
+        return justificativa;
+    }
     public void setJustificativa(String justificativa) {
         this.justificativa = justificativa;
     }
 
-    public String getEmenta() {return ementa;}
+    public String getEmenta() {
+        if(ementa == null){
+            return "";
+        }
+        return ementa;
+    }
     public void setEmenta(String ementa) {
         this.ementa = ementa;
     }
 
-    // Retorna os objetivos formatados como string
     public String getObjetivos() {
+        if(objetivos == null){
+            return "";
+        }
         String s = "";
-        for (int i = 0; i < objetivos.length; i++) {
+        for(int i = 0; i < objetivos.length; i++) {
             s += "- ";
             s += objetivos[i];
-            s += "\n"; // Corrigido: era "/n" (errado), agora está como quebra de linha verdadeira
+            s += "\n";
         }
         return s;
     }
@@ -55,23 +79,52 @@ public class PlanoDeEnsino {
     }
 
 
-    public List<AtividadeCalendario> getCalendarioAtividades() {return calendarioAtividades;}
-    public void setCalendarioAtividades(List<AtividadeCalendario> calendarioAtividades) {
+    public String getStringCalendarioAtividades() {
+        if (calendarioAtividades == null || calendarioAtividades.isEmpty()) {
+            return "";
+        }
+        String s = "";
+        for (AtividadeCalendario atividade : calendarioAtividades.values()) {
+            if (atividade != null) {
+                s += atividade.toString2();
+                s += "\n";
+            }
+        }
+        return s;
+    }
+    public HashMap<String, AtividadeCalendario> getCalendarioAtividades(){
+        return calendarioAtividades;
+    }
+    public void setCalendarioAtividades(HashMap<String, AtividadeCalendario> calendarioAtividades) {
         this.calendarioAtividades = calendarioAtividades;
     }
+    public void addAtividade(String idAtividadade, String data, String descricao, int cargaHoraria) {
+        AtividadeCalendario atividade = new AtividadeCalendario(idAtividadade, data, descricao, cargaHoraria);
+        getCalendarioAtividades().put(idAtividadade, atividade);
+    }
+    public void excluirAtividade(String idAtividadade) {
+        getCalendarioAtividades().remove(idAtividadade);
+    }
 
-    public String getMetodologia() {return metodologia;}
+    public String getMetodologia() {
+        if(metodologia == null){
+            return "";
+        }
+        return metodologia;
+    }
     public void setMetodologia(String metodologia) {
         this.metodologia = metodologia;
     }
 
-    // Retorna as atividades formatadas como string
     public String getAtividades() {
+        if(atividades == null){
+            return "";
+        }
         String s = "";
-        for (int i = 0; i < atividades.length; i++) {
+        for(int i = 0; i < atividades.length; i++) {
             s += "- ";
             s += atividades[i];
-            s += "\n"; // Corrigido: era "/n"
+            s += "\n";
         }
         return s;
     }
@@ -79,22 +132,41 @@ public class PlanoDeEnsino {
         this.atividades = atividades;
     }
 
-    public String getSistemaAvaliacao() {return sistemaAvaliacao;}
+    public String getSistemaAvaliacao() {
+        if(sistemaAvaliacao == null){
+            return "";
+        }
+        return sistemaAvaliacao;
+    }
     public void setSistemaAvaliacao(String sistemaAvaliacao) {
         this.sistemaAvaliacao = sistemaAvaliacao;
     }
 
-    // Retorna a bibliografia formatada como string
-    public String getBibliografia() {
+    public String getStringBibliografia() {
+        if (bibliografia == null || bibliografia.isEmpty()) {
+            return "";
+        }
         String s = "";
-        for (int i = 0; i < bibliografia.size(); i++) {
-            s += bibliografia.get(i).toString();
-            s += "\n"; // Corrigido: era "/n"
+        for (MaterialEstudo material : bibliografia.values()) {
+            if (material != null) {
+                s += material.toString2();
+                s += "\n";
+            }
         }
         return s;
     }
-    public void setBibliografia(List<MaterialEstudo> bibliografia) {
+    public HashMap<String, MaterialEstudo> getBibliografia() {
+        return bibliografia;
+    }
+    public void setBibliografia(HashMap<String, MaterialEstudo> bibliografia) {
         this.bibliografia = bibliografia;
+    }
+    public void addMaterial(String idMaterial, String titulo, String autor, String ano, String isbn) {
+        MaterialEstudo material = new MaterialEstudo(idMaterial, titulo, autor, ano, isbn);
+        getBibliografia().put(idMaterial, material);
+    }
+    public void excluirMaterial(String idMaterial) {
+        getBibliografia().remove(idMaterial);
     }
 
     public String getNomeProfessor() {
