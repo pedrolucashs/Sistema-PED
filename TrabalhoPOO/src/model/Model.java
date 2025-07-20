@@ -189,20 +189,20 @@ public class Model {
     }
 
 //cadastra parte de strings do plano de ensino
-    public boolean cadastrarEmenta(String justificativa, String ementa, String[] objetivos,
+    public boolean cadastrarEmenta(String codigoTurma, String anoSemestre, String justificativa, String ementa, String[] objetivos,
                                    String metodologia, String[] atividades,
-                                   String sistemaAvaliacao, String nomeProfessor) {
+                                   String sistemaAvaliacao) {
         if (justificativa == null || justificativa.trim().isEmpty() ||
                 ementa == null || ementa.trim().isEmpty() ||
                 objetivos == null || objetivos.length == 0 ||
                 metodologia == null || metodologia.trim().isEmpty() ||
                 atividades == null || atividades.length == 0 ||
-                sistemaAvaliacao == null || sistemaAvaliacao.trim().isEmpty() ||
-                nomeProfessor == null || nomeProfessor.trim().isEmpty()) {
+                sistemaAvaliacao == null || sistemaAvaliacao.trim().isEmpty()) {
             return false;
         }
         Professor professor = (Professor) usuarioAutenticado;
-        professor.getTurmas()
+        professor.getTurmas().get(codigoTurma).getPlano().editarPlano(anoSemestre, justificativa, ementa,
+                objetivos, metodologia, atividades, sistemaAvaliacao);
 
         return true;
     }
