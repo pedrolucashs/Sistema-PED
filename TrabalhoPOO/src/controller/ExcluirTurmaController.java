@@ -3,6 +3,7 @@ package controller;
 import model.Model;
 import view.*;
 
+// Controller para excluir turmas
 public class ExcluirTurmaController implements Observer {
     private Model model;
     private ExcluirTurmaView view;
@@ -12,6 +13,7 @@ public class ExcluirTurmaController implements Observer {
         this.view = view;
     }
 
+    // Evento para excluir a turma pelo código informado na view
     public void handleEvent(String event) {
         String codigoTurma = view.getCodigoTurma();
         try {
