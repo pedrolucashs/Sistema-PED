@@ -44,4 +44,11 @@ public class AtividadeCalendario {
         String s = String.format("Id da Atividade: %s | Data: %s | Descrição do Conteúdo: %s | Carga Horária: %d", getIdAtividade(), getData(), getDescricaoConteudo(), getCargaHoraria());
         return s;
     }
+    public String toString2() {
+        if(idAtividade == null) {
+            return "";
+        }
+        String s = String.format("Data: %s | Descrição do Conteúdo: %s | Carga Horária: %d", getIdAtividade(), getData(), getDescricaoConteudo(), getCargaHoraria());
+        return s;
+    }
 }

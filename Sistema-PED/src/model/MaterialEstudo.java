@@ -51,4 +51,11 @@ public class MaterialEstudo {
         String s = String.format("Id do Material: %s\nTítulo: %s | Autor: %s\nAno: %s | ISBN: %s", getIdMaterial(), getTitulo(), getAutor(), getAno(), getIsbn());
         return s;
     }
+    public String toString2() {
+        if(idMaterial == null) {
+            return "";
+        }
+        String s = String.format("Título: %s | Autor: %s\nAno: %s | ISBN: %s", getIdMaterial(), getTitulo(), getAutor(), getAno(), getIsbn());
+        return s;
+    }
 }

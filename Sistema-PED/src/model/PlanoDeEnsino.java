@@ -86,7 +86,7 @@ public class PlanoDeEnsino {
         String s = "";
         for (AtividadeCalendario atividade : calendarioAtividades.values()) {
             if (atividade != null) {
-                s += atividade.toString();
+                s += atividade.toString2();
                 s += "\n";
             }
         }
@@ -149,7 +149,7 @@ public class PlanoDeEnsino {
         String s = "";
         for (MaterialEstudo material : bibliografia.values()) {
             if (material != null) {
-                s += material.toString();
+                s += material.toString2();
                 s += "\n";
             }
         }
