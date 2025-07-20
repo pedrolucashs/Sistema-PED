@@ -1,19 +1,55 @@
-// Classe que representa uma atividade do calendário escolar
-class AtividadeCalendario {
+package model;
+// Classe que representa uma atividade no calendário (tipo uma aula ou evento)
+
+public class AtividadeCalendario {
+    private String idAtividade;
     private String data;
     private String descricaoConteudo;
     private int cargaHoraria;
 
-    public String getData() { return data; }
-    public void setData(String data) { this.data = data; }
+    public AtividadeCalendario(String idAtividade, String data, String descricao, int cargaHoraria) {
+        setIdAtividade(idAtividade);
+        setData(data);
+        setDescricaoConteudo(descricao);
+        setCargaHoraria(cargaHoraria);
+    }
 
-    public String getDescricaoConteudo() { return descricaoConteudo; }
-    public void setDescricaoConteudo(String descricaoConteudo) { this.descricaoConteudo = descricaoConteudo; }
+    public String getIdAtividade() {
+        return idAtividade;
+    }
+    public void setIdAtividade(String idAtividade) {
+        this.idAtividade = idAtividade;
+    }
 
-    public int getCargaHoraria() { return cargaHoraria; }
+    public String getData() {return data;}
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getDescricaoConteudo() {return descricaoConteudo;}
+    public void setDescricaoConteudo(String descricaoConteudo) {
+        this.descricaoConteudo = descricaoConteudo;
+    }
+
+    public int getCargaHoraria() {return cargaHoraria;}
     public void setCargaHoraria(int cargaHoraria) {
-        if (cargaHoraria > 0) {
-            this.cargaHoraria = cargaHoraria; // Define a carga horária se for positiva
+        if(cargaHoraria > 0){
+            this.cargaHoraria = cargaHoraria;
         }
+    }
+
+    public String toString() {
+        if(idAtividade == null) {
+            return "";
+        }
+        String s = String.format("Id da Atividade: %s | Data: %s | Descrição do Conteúdo: %s | Carga Horária: %d", getIdAtividade(), getData(), getDescricaoConteudo(), getCargaHoraria());
+        return s;
+    }
+    public String toString2() {
+        if(idAtividade == null) {
+            return "";
+        }
+        String s = String.format("Data: %s | Descrição do Conteúdo: %s | Carga Horária: %d", getIdAtividade(), getData(), getDescricaoConteudo(), getCargaHoraria());
+        return s;
     }
 }
