@@ -7,6 +7,7 @@ import model.exceptions.ProfessorNaoEncontradoException;
 import view.Observer;
 import view.ExcluirProfView;
 
+// Controller para excluir professores, trata exceções específicas e interação contínua
 public class ExcluirProfController implements Observer {
     private Model model;
     private ExcluirProfView view;
@@ -16,6 +17,7 @@ public class ExcluirProfController implements Observer {
         this.view = view;
     }
 
+    // Loop para tentar excluir vários professores até o usuário cancelar
     public void iniciarExclusaoProfessor() {
         boolean continuar = true;
 
