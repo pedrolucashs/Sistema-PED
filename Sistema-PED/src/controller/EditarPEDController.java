@@ -23,6 +23,7 @@ public class EditarPEDController implements Observer {
                 break;
             case "2":
                 BibliografiaView view2 = new BibliografiaView();
+                view2.init(model, codigoTurma);
                 break;
             case "3":
                 EmentaView view3 = new EmentaView();

@@ -38,7 +38,7 @@ public class AtividadeCalendario {
     }
 
     public String toString() {
-        if(data == null && descricaoConteudo == null && cargaHoraria == 0){
+        if(idAtividade == null) {
             return "";
         }
         String s = String.format("Id da Atividade: %s | Data: %s | Descrição do Conteúdo: %s | Carga Horária: %d", getIdAtividade(), getData(), getDescricaoConteudo(), getCargaHoraria());

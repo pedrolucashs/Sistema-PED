@@ -69,13 +69,15 @@ public class PlanoDeEnsino {
 
 
     public String getStringCalendarioAtividades() {
-        if(calendarioAtividades == null){
+        if (calendarioAtividades == null || calendarioAtividades.isEmpty()) {
             return "";
         }
         String s = "";
-        for(int i = 0; i < calendarioAtividades.size(); i++) {
-            s += calendarioAtividades.get(i).toString();
-            s += "/n";
+        for (AtividadeCalendario atividade : calendarioAtividades.values()) {
+            if (atividade != null) {
+                s += atividade.toString();
+                s += "\n";
+            }
         }
         return s;
     }
@@ -129,19 +131,31 @@ public class PlanoDeEnsino {
         this.sistemaAvaliacao = sistemaAvaliacao;
     }
 
-    public String getBibliografia() {
-        if(bibliografia == null){
+    public String getStringBibliografia() {
+        if (bibliografia == null || bibliografia.isEmpty()) {
             return "";
         }
         String s = "";
-        for(int i = 0; i < bibliografia.size(); i++) {
-            s += bibliografia.get(i).toString();
-            s += "/n";
+        for (MaterialEstudo material : bibliografia.values()) {
+            if (material != null) {
+                s += material.toString();
+                s += "\n";
+            }
         }
         return s;
     }
+    public HashMap<String, MaterialEstudo> getBibliografia() {
+        return bibliografia;
+    }
     public void setBibliografia(HashMap<String, MaterialEstudo> bibliografia) {
         this.bibliografia = bibliografia;
+    }
+    public void addMaterial(String idMaterial, String titulo, String autor, String ano, String isbn) {
+        MaterialEstudo material = new MaterialEstudo(idMaterial, titulo, autor, ano, isbn);
+        getBibliografia().put(idMaterial, material);
+    }
+    public void excluirMaterial(String idMaterial) {
+        getBibliografia().remove(idMaterial);
     }
 
     public String getNomeProfessor() {

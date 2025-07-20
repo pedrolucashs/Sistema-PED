@@ -22,7 +22,7 @@ public class Model {
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
-            adminPadrao = new Admin("Admin", "0000", "Admin", "Password");
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
             campusPadrao = new Campus("Russas", new HashMap<String, Turma>(), new HashMap<String, Professor>());
             adminPadrao.setUnidade(campusPadrao);
 
@@ -241,6 +241,7 @@ public class Model {
         s += String.format(turma.getPlano().getObjetivos());
         s += String.format("\n\n");
         s += String.format("5. CALENDÁRIO DE ATIVIDADES\n");
+        s += String.format(turma.getPlano().getStringCalendarioAtividades());
         s += String.format("\n\n");
         s += String.format("6. METODOLOGIA DE ENSINO\n");
         s += String.format(turma.getPlano().getMetodologia());
@@ -252,7 +253,7 @@ public class Model {
         s += String.format(turma.getPlano().getSistemaAvaliacao());
         s += String.format("\n\n");
         s += String.format("9. BIBLIOGRAFIA\n");
-        s += String.format(turma.getPlano().getBibliografia());
+        s += String.format(turma.getPlano().getStringBibliografia());
         s += String.format("\n");
 
         return s;
@@ -419,5 +420,56 @@ public class Model {
             }
         }
         return "";
+    }
+
+    public String getBibliografia(String codigoTurma){
+        if(usuarioAutenticado instanceof Professor){
+            Professor prof = (Professor) usuarioAutenticado;
+            if (prof.getTurmas() != null){
+                if(prof.getTurmas().get(codigoTurma) != null){
+                    String resultado = "";
+                    resultado += "Bibliografia:\n\n";
+                    PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                    for (HashMap.Entry<String, MaterialEstudo> entrada : plano.getBibliografia().entrySet()) {
+                        MaterialEstudo material = entrada.getValue();
+                        resultado += material.toString() + "\n";
+                        resultado += "\n";
+                    }
+                    return resultado;
+                }
+            }
+        }
+        return "";
+    }
+
+    public boolean existeMaterial(String codigoTurma, String idMaterial){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                if(prof.getTurmas().get(codigoTurma).getPlano().getBibliografia().containsKey(idMaterial)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void addMaterial(String codigoTurma, String idMaterial, String titulo, String autor, String ano, String isbn){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.addMaterial(idMaterial, titulo, autor, ano, isbn);
+            }
+        }
+    }
+    public void excluirMaterial(String codigoTurma, String idMaterial){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.excluirMaterial(idMaterial);
+            }
+        }
     }
 }
