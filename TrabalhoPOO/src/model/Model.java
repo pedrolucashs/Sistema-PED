@@ -3,21 +3,21 @@ package model;
 import java.util.HashMap;
 import java.util.ArrayList;
 import view.*;
-
+// Classe principal que representa o modelo da aplicação (Padrão Singleton)
 public class Model {
-    private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();
-    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();
-    private Usuario usuarioAutenticado;
-    private ArrayList<Observer> observers = new ArrayList<Observer>();
+    private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();// Armazena todos os usuários
+    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();// Armazena todos os campus
+    private Usuario usuarioAutenticado;// Usuário atualmente logado
+    private ArrayList<Observer> observers = new ArrayList<Observer>();// Lista de observadores (para notificação de mudanças)
 
-    private static Model instanciaUnica;
+    private static Model instanciaUnica;// Instância única (singleton
     private static Admin adminPadrao;
     private static Campus campusPadrao;
-
+      // Construtor privado (singleton)
     private Model(){
         super();
     }
-
+    // Método que retorna a instância única da classe (cria se não existir)
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
@@ -30,13 +30,13 @@ public class Model {
         }
         return instanciaUnica;
     }
-
+     // Notifica todos os observadores
     public void notifica() {
         for (Observer o : observers) {
             o.update();
         }
     }
-
+    // Retorna o nome de um usuário a partir do login
     public String getNomeUsuario(String login) {
         if (login != null) {
             Usuario usuario = usuarios.get(login);
@@ -46,14 +46,14 @@ public class Model {
         }
         return "";
     }
-
+    // Retorna o login do usuário autenticado
     public String getUsuarioLogin() {
         if (usuarioAutenticado != null) {
             return usuarioAutenticado.getLogin();
         }
         return "";
     }
-
+    // Cadastra um novo professor no sistema
     public boolean setUsuario(String nome, String id, String login, String senha) {
         if (nome != null && login != null && senha != null && id != null) {
             if(usuarios.containsKey(login)){
@@ -68,7 +68,7 @@ public class Model {
         }
         return false;
     }
-
+    // Autentica um usuário com login e senha
     public boolean autenticarUsuario(String login, String senha) {
         Usuario usuario;
         boolean autenticado = false;
@@ -84,12 +84,12 @@ public class Model {
         notifica();
         return autenticado;
     }
-
+    // Desloga o usuário atual
     public void deslogarUsuario() {
         usuarioAutenticado = null;
         notifica();
     }
-
+    // Retorna o login do usuário autenticado
     public String getUsuarioAutenticado() {
         if (usuarioAutenticado != null){
             return usuarioAutenticado.getLogin();
@@ -97,23 +97,23 @@ public class Model {
             return "";
         }
     }
-
+    // Retorna o total de usuários cadastrados
     public int getTotalUsuarios() {
         return usuarios.size();
     }
-
+    // Adiciona um observador
     public void attachObserver(Observer observer) {
         if (observer != null) {
             observers.add(observer);
         }
     }
-
+    // Remove um observador
     public void detachObserver(Observer observer) {
         if (observer != null) {
             observers.remove(observer);
         }
     }
-
+    // Retorna uma turma específica de um campus
     private Turma getTurma(String codigoTurma, String nomeUnidade) {
         if(listaDeCampus.containsKey(nomeUnidade)){
             Campus campus = listaDeCampus.get(nomeUnidade);
@@ -123,7 +123,7 @@ public class Model {
         }
         return null;
     }
-
+    // Verifica se um plano de ensino existe para uma turma
     public boolean existePED(String codigoTurma, String nomeUnidade){
         if(getTurma(codigoTurma,nomeUnidade) != null){
             Turma turma = getTurma(codigoTurma,nomeUnidade);
@@ -137,7 +137,7 @@ public class Model {
     public void sistemaIniciado(){
         notifica();
     }
-
+    // Retorna o tipo do usuário autenticado
     public String getTipoUsuario() {
         if (usuarioAutenticado != null) {
             String tipoUsuario = "";
@@ -150,7 +150,7 @@ public class Model {
         }
         return "";
     }
-
+    // Retorna o nome do campus do usuário autenticado
     public String getCampus(){
         if(usuarioAutenticado != null && usuarioAutenticado instanceof Admin){
             Admin adminLogado = (Admin) usuarioAutenticado;
@@ -163,7 +163,7 @@ public class Model {
         }
         return "";
     }
-
+     // Verifica se uma turma existe no campus do admin
     public boolean existeTurmaAdmin(String codigoTurma){
         Admin admin = (Admin) usuarioAutenticado;
         if(admin.getUnidade().getTurmas().containsKey(codigoTurma)){
@@ -171,7 +171,7 @@ public class Model {
         }
         return false;
     }
-
+    // Verifica se uma turma existe no professor autenticado
     public boolean existeTurmaProf(String codigoTurma){
         Professor prof = (Professor) usuarioAutenticado;
         if(prof.getTurmas().containsKey(codigoTurma)){
@@ -179,7 +179,7 @@ public class Model {
         }
         return false;
     }
-
+    // Verifica se existe um professor com o ID fornecido
     public boolean existeProfessor(String idProfessor){
         Admin admin = (Admin) usuarioAutenticado;
         if (admin.getUnidade().getProfessores().containsKey(idProfessor)) {
@@ -188,7 +188,7 @@ public class Model {
         return false;
     }
 
-
+//cadastra parte de strings do plano de ensino
     public boolean cadastrarEmenta(String justificativa, String ementa, String[] objetivos,
                                    String metodologia, String[] atividades,
                                    String sistemaAvaliacao, String nomeProfessor) {
@@ -206,6 +206,7 @@ public class Model {
 
         return true;
     }
+    //cadastra turma 
     public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
                                   int cargaHoraria) {
@@ -231,7 +232,7 @@ public class Model {
         admin.getUnidade().getTurmas().put(codigoTurma, novaTurma);
         return true;
     }
-
+//retorna plano de ensino
     public String getPlanoDeEnsino(String codigoTurma, String nomeUnidade){
         Turma turma = getTurma(codigoTurma, nomeUnidade);
         String s = String.format("PLANO DE ENSINO");
@@ -271,7 +272,7 @@ public class Model {
 
         return s;
     }
-
+//verifica se a turma existe 
     public boolean existeTurmas() {
         if(usuarioAutenticado != null){
             if(usuarioAutenticado instanceof Professor){
@@ -283,7 +284,7 @@ public class Model {
         }
         return false;
     }
-
+//retona turmas tanto de professor quanto de admin
     public String getTurmas() {
         if(usuarioAutenticado != null){
             if(usuarioAutenticado instanceof Professor){
@@ -313,7 +314,7 @@ public class Model {
         }
         return "";
     }
-
+//retorna a turma escolhida do professor
     public String getTurmaEscolhida(String codigoTurma){
         if(usuarioAutenticado != null){
             if(usuarioAutenticado instanceof Professor){
@@ -326,7 +327,7 @@ public class Model {
         }
         return "";
     }
-
+//exclui turma
     public boolean excluirTurma(String codigoTurma){
         Admin admin = (Admin)usuarioAutenticado;
 
@@ -339,7 +340,7 @@ public class Model {
             return false;
         }
     }
-
+//retorna os professores que o admin cadastrou
     public String getProfessores() {
         if(usuarioAutenticado instanceof Admin){
             Admin admin = (Admin) usuarioAutenticado;
