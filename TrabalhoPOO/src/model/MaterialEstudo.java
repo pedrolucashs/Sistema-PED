@@ -1,4 +1,5 @@
 package model;
+// Classe que representa um material de estudo (ex: livro)
 
 public class MaterialEstudo {
     private String titulo;
