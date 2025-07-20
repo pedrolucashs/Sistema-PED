@@ -29,6 +29,7 @@ public class EditarPEDController implements Observer {
                 break;
             case "3": // Ementa do PED (parece não abrir view, pode estar incompleto)
                 EmentaView view3 = new EmentaView();
+                view3.init(model, codigoTurma);
                 break;
             case "0": // Finalizar edição e sair
                 view.finalizar();
