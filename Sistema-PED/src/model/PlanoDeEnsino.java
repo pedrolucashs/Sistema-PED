@@ -21,6 +21,17 @@ public class PlanoDeEnsino {
         setBibliografia(new HashMap<String, MaterialEstudo>());
     }
 
+    public void editarPlano(String anoSemestre, String justificativa, String ementa, String[] objetivos,
+                            String metodologia, String[] atividades, String sistemaAvaliacao) {
+        setAnoSemestre(anoSemestre);
+        setJustificativa(justificativa);
+        setEmenta(ementa);
+        setObjetivos(objetivos);
+        setMetodologia(metodologia);
+        setAtividades(atividades);
+        setSistemaAvaliacao(sistemaAvaliacao);
+    }
+
     public String getAnoSemestre() {
         if (anoSemestre == null) {
             anoSemestre = "";
@@ -59,7 +70,7 @@ public class PlanoDeEnsino {
         for(int i = 0; i < objetivos.length; i++) {
             s += "- ";
             s += objetivos[i];
-            s += "/n";
+            s += "\n";
         }
         return s;
     }
@@ -113,7 +124,7 @@ public class PlanoDeEnsino {
         for(int i = 0; i < atividades.length; i++) {
             s += "- ";
             s += atividades[i];
-            s += "/n";
+            s += "\n";
         }
         return s;
     }

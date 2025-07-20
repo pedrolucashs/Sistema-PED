@@ -27,6 +27,7 @@ public class EditarPEDController implements Observer {
                 break;
             case "3":
                 EmentaView view3 = new EmentaView();
+                view3.init(model, codigoTurma);
                 break;
             case "0":
                 view.finalizar();

@@ -189,6 +189,24 @@ public class Model {
         return false;
     }
 
+    public boolean cadastrarEmenta(String codigoTurma, String anoSemestre, String justificativa, String ementa, String[] objetivos,
+                                   String metodologia, String[] atividades,
+                                   String sistemaAvaliacao) {
+        if (justificativa == null || justificativa.trim().isEmpty() ||
+                ementa == null || ementa.trim().isEmpty() ||
+                objetivos == null || objetivos.length == 0 ||
+                metodologia == null || metodologia.trim().isEmpty() ||
+                atividades == null || atividades.length == 0 ||
+                sistemaAvaliacao == null || sistemaAvaliacao.trim().isEmpty()) {
+            return false;
+        }
+        Professor professor = (Professor) usuarioAutenticado;
+        professor.getTurmas().get(codigoTurma).getPlano().editarPlano(anoSemestre, justificativa, ementa,
+                objetivos, metodologia, atividades, sistemaAvaliacao);
+
+        return true;
+    }
+
     public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
                                   int cargaHoraria) {
@@ -321,6 +339,12 @@ public class Model {
 
         Turma turma = admin.getUnidade().getTurmas().get(codigoTurma);
         if (turma != null) {
+            for (HashMap.Entry<String, Professor> entrada : admin.getUnidade().getProfessores().entrySet()) {
+                Professor professor = entrada.getValue();
+                if (professor.getTurmas() != null && professor.getTurmas().containsKey(codigoTurma)) {
+                    professor.getTurmas().remove(codigoTurma);
+                }
+            }
             admin.getUnidade().getTurmas().remove(codigoTurma);
             notifica();
             return true;
