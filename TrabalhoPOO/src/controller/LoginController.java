@@ -3,6 +3,7 @@ package controller;
 import model.Model;
 import view.*;
 
+// Controller para login de usuários
 public class LoginController implements Observer {
     Model model;
     LoginView view;
@@ -13,6 +14,7 @@ public class LoginController implements Observer {
         model.attachObserver(this);
     }
 
+    // Evento para tentar autenticar o usuário
     public void handleEvent(String event) {
         switch (event) {
             case "OK" :
