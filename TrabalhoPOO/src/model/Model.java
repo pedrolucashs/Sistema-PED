@@ -3,25 +3,26 @@ package model;
 import java.util.HashMap;
 import java.util.ArrayList;
 import view.*;
-// Classe principal que representa o modelo da aplicação (Padrão Singleton)
-public class Model {
-    private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();// Armazena todos os usuários
-    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();// Armazena todos os campus
-    private Usuario usuarioAutenticado;// Usuário atualmente logado
-    private ArrayList<Observer> observers = new ArrayList<Observer>();// Lista de observadores (para notificação de mudanças)
+import model.exceptions.*;
 
-    private static Model instanciaUnica;// Instância única (singleton
+public class Model {
+    private HashMap<String,Usuario> usuarios = new HashMap<String, Usuario>();
+    private HashMap<String,Campus> listaDeCampus = new HashMap<String, Campus>();
+    private Usuario usuarioAutenticado;
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
+
+    private static Model instanciaUnica;
     private static Admin adminPadrao;
     private static Campus campusPadrao;
-      // Construtor privado (singleton)
+
     private Model(){
         super();
     }
-    // Método que retorna a instância única da classe (cria se não existir)
+
     public static Model getInstancia(){
         if (instanciaUnica == null){
             instanciaUnica = new Model();
-            adminPadrao = new Admin("Admin", "0000", "Admin", "Password");
+            adminPadrao = new Admin("Admin", "0000", "Admin", "Senha");
             campusPadrao = new Campus("Russas", new HashMap<String, Turma>(), new HashMap<String, Professor>());
             adminPadrao.setUnidade(campusPadrao);
 
@@ -30,13 +31,13 @@ public class Model {
         }
         return instanciaUnica;
     }
-     // Notifica todos os observadores
+
     public void notifica() {
         for (Observer o : observers) {
             o.update();
         }
     }
-    // Retorna o nome de um usuário a partir do login
+
     public String getNomeUsuario(String login) {
         if (login != null) {
             Usuario usuario = usuarios.get(login);
@@ -46,14 +47,14 @@ public class Model {
         }
         return "";
     }
-    // Retorna o login do usuário autenticado
+
     public String getUsuarioLogin() {
         if (usuarioAutenticado != null) {
             return usuarioAutenticado.getLogin();
         }
         return "";
     }
-    // Cadastra um novo professor no sistema
+
     public boolean setUsuario(String nome, String id, String login, String senha) {
         if (nome != null && login != null && senha != null && id != null) {
             if(usuarios.containsKey(login)){
@@ -68,7 +69,7 @@ public class Model {
         }
         return false;
     }
-    // Autentica um usuário com login e senha
+
     public boolean autenticarUsuario(String login, String senha) {
         Usuario usuario;
         boolean autenticado = false;
@@ -84,12 +85,12 @@ public class Model {
         notifica();
         return autenticado;
     }
-    // Desloga o usuário atual
+
     public void deslogarUsuario() {
         usuarioAutenticado = null;
         notifica();
     }
-    // Retorna o login do usuário autenticado
+
     public String getUsuarioAutenticado() {
         if (usuarioAutenticado != null){
             return usuarioAutenticado.getLogin();
@@ -97,23 +98,23 @@ public class Model {
             return "";
         }
     }
-    // Retorna o total de usuários cadastrados
+
     public int getTotalUsuarios() {
         return usuarios.size();
     }
-    // Adiciona um observador
+
     public void attachObserver(Observer observer) {
         if (observer != null) {
             observers.add(observer);
         }
     }
-    // Remove um observador
+
     public void detachObserver(Observer observer) {
         if (observer != null) {
             observers.remove(observer);
         }
     }
-    // Retorna uma turma específica de um campus
+
     private Turma getTurma(String codigoTurma, String nomeUnidade) {
         if(listaDeCampus.containsKey(nomeUnidade)){
             Campus campus = listaDeCampus.get(nomeUnidade);
@@ -123,7 +124,7 @@ public class Model {
         }
         return null;
     }
-    // Verifica se um plano de ensino existe para uma turma
+
     public boolean existePED(String codigoTurma, String nomeUnidade){
         if(getTurma(codigoTurma,nomeUnidade) != null){
             Turma turma = getTurma(codigoTurma,nomeUnidade);
@@ -137,7 +138,7 @@ public class Model {
     public void sistemaIniciado(){
         notifica();
     }
-    // Retorna o tipo do usuário autenticado
+
     public String getTipoUsuario() {
         if (usuarioAutenticado != null) {
             String tipoUsuario = "";
@@ -150,7 +151,7 @@ public class Model {
         }
         return "";
     }
-    // Retorna o nome do campus do usuário autenticado
+
     public String getCampus(){
         if(usuarioAutenticado != null && usuarioAutenticado instanceof Admin){
             Admin adminLogado = (Admin) usuarioAutenticado;
@@ -163,7 +164,7 @@ public class Model {
         }
         return "";
     }
-     // Verifica se uma turma existe no campus do admin
+
     public boolean existeTurmaAdmin(String codigoTurma){
         Admin admin = (Admin) usuarioAutenticado;
         if(admin.getUnidade().getTurmas().containsKey(codigoTurma)){
@@ -171,7 +172,7 @@ public class Model {
         }
         return false;
     }
-    // Verifica se uma turma existe no professor autenticado
+
     public boolean existeTurmaProf(String codigoTurma){
         Professor prof = (Professor) usuarioAutenticado;
         if(prof.getTurmas().containsKey(codigoTurma)){
@@ -179,7 +180,7 @@ public class Model {
         }
         return false;
     }
-    // Verifica se existe um professor com o ID fornecido
+
     public boolean existeProfessor(String idProfessor){
         Admin admin = (Admin) usuarioAutenticado;
         if (admin.getUnidade().getProfessores().containsKey(idProfessor)) {
@@ -188,7 +189,6 @@ public class Model {
         return false;
     }
 
-//cadastra parte de strings do plano de ensino
     public boolean cadastrarEmenta(String codigoTurma, String anoSemestre, String justificativa, String ementa, String[] objetivos,
                                    String metodologia, String[] atividades,
                                    String sistemaAvaliacao) {
@@ -206,7 +206,7 @@ public class Model {
 
         return true;
     }
-    //cadastra turma 
+
     public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
                                   int cargaHoraria) {
@@ -226,53 +226,57 @@ public class Model {
 
         Admin admin = (Admin) usuarioAutenticado;
         Disciplina disciplina = new Disciplina(codigoDisciplina, nomeUnidade, nomeDisciplina, caraterDisciplina,
-                regimeOferta, estruturaCurricular, cargaHoraria);
+                                               regimeOferta, estruturaCurricular, cargaHoraria);
         Turma novaTurma = new Turma(codigoTurma, disciplina, admin.getUnidade().getProfessores().get(idProfessor).getNome());
         admin.getUnidade().getProfessores().get(idProfessor).getTurmas().put(codigoTurma, novaTurma);
         admin.getUnidade().getTurmas().put(codigoTurma, novaTurma);
+        listaDeCampus.get(admin.getUnidade().getNomeUnidade()).getTurmas().put(codigoTurma, novaTurma);
+
         return true;
     }
-//retorna plano de ensino
+
     public String getPlanoDeEnsino(String codigoTurma, String nomeUnidade){
         Turma turma = getTurma(codigoTurma, nomeUnidade);
-        String s = String.format("PLANO DE ENSINO");
-        s+= String.format("1.IDENTIFICAÇÃO");
-        s+= String.format("1.1 UNIDADE: " + nomeUnidade);
-        s+= String.format("1.2 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular());
-        s+= String.format("1.3 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina());
-        s+= String.format("1.4 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo());
-        s+= String.format("1.5 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina());
-        s+= String.format("1.6 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta());
+        String s = String.format("PLANO DE ENSINO\n");
+        s+=String.format("ANO/SEMESTRE: %s\n\n", turma.getPlano().getAnoSemestre());
+        s+= String.format("1.IDENTIFICAÇÃO\n");
+        s+= String.format("1.1 UNIDADE: " + nomeUnidade + "\n");
+        s+= String.format("1.2 ESTRUTURA CURRICULAR: " + turma.getDisciplina().getEstruturaCurricular() + "\n");
+        s+= String.format("1.3 NOME DA DISCIPLINA: " + turma.getDisciplina().getNomeDisciplina() + "\n");
+        s+= String.format("1.4 CÓDIGO DA DISCIPLINA: " + turma.getDisciplina().getCodigo() + "\n");
+        s+= String.format("1.5 CARÁTER DA DISCIPLINA: " + turma.getDisciplina().getCaraterDisciplina() + "\n");
+        s+= String.format("1.6 REGIME DE OFERTA DA DISCIPLINA: " + turma.getDisciplina().getRegimeOferta() + "\n");
         s+= String.format("1.7 CARGA HORÁRIA: %d", turma.getDisciplina().getCargaHoraria());
-        s+= String.format("1.8 PROFESSOR: " + turma.getPlano().getNomeProfessor());
-        s += String.format("/n/n");
-        s += String.format("2. JUSTIFICATIVA");
+        s+= String.format("\n1.8 PROFESSOR: " + turma.getPlano().getNomeProfessor());
+        s += String.format("\n\n");
+        s += String.format("2. JUSTIFICATIVA\n");
         s += String.format(turma.getPlano().getJustificativa());
-        s += String.format("/n/n");
-        s += String.format("3. EMENTA");
+        s += String.format("\n\n");
+        s += String.format("3. EMENTA\n");
         s += String.format(turma.getPlano().getEmenta());
-        s += String.format("/n/n");
-        s += String.format("4. OBJETIVOS");
+        s += String.format("\n\n");
+        s += String.format("4. OBJETIVOS\n");
         s += String.format(turma.getPlano().getObjetivos());
-        s += String.format("/n/n");
-        s += String.format("5. CALENDÁRIO DE ATIVIDADES");
-        s += String.format("/n/n");
-        s += String.format("6. METODOLOGIA DE ENSINO");
+        s += String.format("\n\n");
+        s += String.format("5. CALENDÁRIO DE ATIVIDADES\n");
+        s += String.format(turma.getPlano().getStringCalendarioAtividades());
+        s += String.format("\n\n");
+        s += String.format("6. METODOLOGIA DE ENSINO\n");
         s += String.format(turma.getPlano().getMetodologia());
-        s += String.format("/n/n");
-        s += String.format("7. ATIVIDADES DISCENTES");
+        s += String.format("\n\n");
+        s += String.format("7. ATIVIDADES DISCENTES\n");
         s += String.format(turma.getPlano().getAtividades());
-        s += String.format("/n/n");
-        s += String.format("8. SISTEMA DE AVALIAÇÃO");
+        s += String.format("\n\n");
+        s += String.format("8. SISTEMA DE AVALIAÇÃO\n");
         s += String.format(turma.getPlano().getSistemaAvaliacao());
-        s += String.format("/n/n");
-        s += String.format("9. BIBLIOGRAFIA");
-        s += String.format(turma.getPlano().getBibliografia());
-        s += String.format("/n/n");
+        s += String.format("\n\n");
+        s += String.format("9. BIBLIOGRAFIA\n");
+        s += String.format(turma.getPlano().getStringBibliografia());
+        s += String.format("\n");
 
         return s;
     }
-//verifica se a turma existe 
+
     public boolean existeTurmas() {
         if(usuarioAutenticado != null){
             if(usuarioAutenticado instanceof Professor){
@@ -284,7 +288,7 @@ public class Model {
         }
         return false;
     }
-//retona turmas tanto de professor quanto de admin
+
     public String getTurmas() {
         if(usuarioAutenticado != null){
             if(usuarioAutenticado instanceof Professor){
@@ -295,6 +299,7 @@ public class Model {
                     for (HashMap.Entry<String, Turma> entrada : prof.getTurmas().entrySet()) {
                         Turma turma = entrada.getValue();
                         resultado += turma.toString() + "\n";
+                        resultado += "\n";
                     }
                     return resultado;
                 }
@@ -307,6 +312,7 @@ public class Model {
                     for (HashMap.Entry<String, Turma> entrada : campus.getTurmas().entrySet()) {
                         Turma turma = entrada.getValue();
                         resultado += turma.toString() + "\n";
+                        resultado += "\n";
                     }
                     return resultado;
                 }
@@ -314,7 +320,7 @@ public class Model {
         }
         return "";
     }
-//retorna a turma escolhida do professor
+
     public String getTurmaEscolhida(String codigoTurma){
         if(usuarioAutenticado != null){
             if(usuarioAutenticado instanceof Professor){
@@ -327,12 +333,18 @@ public class Model {
         }
         return "";
     }
-//exclui turma
+
     public boolean excluirTurma(String codigoTurma){
         Admin admin = (Admin)usuarioAutenticado;
 
         Turma turma = admin.getUnidade().getTurmas().get(codigoTurma);
         if (turma != null) {
+            for (HashMap.Entry<String, Professor> entrada : admin.getUnidade().getProfessores().entrySet()) {
+                Professor professor = entrada.getValue();
+                if (professor.getTurmas() != null && professor.getTurmas().containsKey(codigoTurma)) {
+                    professor.getTurmas().remove(codigoTurma);
+                }
+            }
             admin.getUnidade().getTurmas().remove(codigoTurma);
             notifica();
             return true;
@@ -340,7 +352,82 @@ public class Model {
             return false;
         }
     }
-//retorna os professores que o admin cadastrou
+
+    public boolean excluirProfessor(String idProfessor) {
+        if (!(usuarioAutenticado instanceof Admin)) {
+            throw new PermissaoNegadaException("Apenas administradores podem excluir professores.");
+        }
+
+        Admin adminLogado = (Admin) usuarioAutenticado;
+        Campus campusDoAdmin = adminLogado.getUnidade();
+
+        if (!campusDoAdmin.getProfessores().containsKey(idProfessor)) {
+            throw new ProfessorNaoEncontradoException(String.format("Professor com ID '%s' não encontrado no campus '%s'.", idProfessor, campusDoAdmin.getNomeUnidade()));
+        }
+
+        Professor professorParaExcluir = campusDoAdmin.getProfessores().get(idProfessor);
+
+        campusDoAdmin.getProfessores().remove(idProfessor);
+
+        String loginProfessor = professorParaExcluir.getLogin();
+        if (usuarios.containsKey(loginProfessor)) {
+            usuarios.remove(loginProfessor);
+        } else {
+        }
+        notifica();
+        return true;
+    }
+
+    public String getCalendario(String codigoTurma){
+        if(usuarioAutenticado instanceof Professor){
+            Professor prof = (Professor) usuarioAutenticado;
+            if (prof.getTurmas() != null){
+                if(prof.getTurmas().get(codigoTurma) != null){
+                    String resultado = "";
+                    resultado += "Calendário de Atividades:\n\n";
+                    PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                    for (HashMap.Entry<String, AtividadeCalendario> entrada : plano.getCalendarioAtividades().entrySet()) {
+                        AtividadeCalendario atividade = entrada.getValue();
+                        resultado += atividade.toString() + "\n";
+                    }
+                    return resultado;
+                }
+            }
+        }
+        return "";
+    }
+
+    public boolean existeAtividade(String codigoTurma, String idAtividade){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                if(prof.getTurmas().get(codigoTurma).getPlano().getCalendarioAtividades().containsKey(idAtividade)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void addAtividade(String codigoTurma, String idAtividade, String data, String descricao, int cargaHoraria){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.addAtividade(idAtividade, data, descricao, cargaHoraria);
+            }
+        }
+    }
+    public void excluirAtividade(String codigoTurma, String idAtividade){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.excluirAtividade(idAtividade);
+            }
+        }
+    }
+
     public String getProfessores() {
         if(usuarioAutenticado instanceof Admin){
             Admin admin = (Admin) usuarioAutenticado;
@@ -351,6 +438,7 @@ public class Model {
                 for (HashMap.Entry<String,Professor> entrada : campus.getProfessores().entrySet()) {
                     Professor professor = entrada.getValue();
                     resultado += professor.toString() + "\n";
+                    resultado += "\n";
                 }
                 return resultado;
             }
@@ -358,4 +446,54 @@ public class Model {
         return "";
     }
 
+    public String getBibliografia(String codigoTurma){
+        if(usuarioAutenticado instanceof Professor){
+            Professor prof = (Professor) usuarioAutenticado;
+            if (prof.getTurmas() != null){
+                if(prof.getTurmas().get(codigoTurma) != null){
+                    String resultado = "";
+                    resultado += "Bibliografia:\n\n";
+                    PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                    for (HashMap.Entry<String, MaterialEstudo> entrada : plano.getBibliografia().entrySet()) {
+                        MaterialEstudo material = entrada.getValue();
+                        resultado += material.toString() + "\n";
+                        resultado += "\n";
+                    }
+                    return resultado;
+                }
+            }
+        }
+        return "";
+    }
+
+    public boolean existeMaterial(String codigoTurma, String idMaterial){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                if(prof.getTurmas().get(codigoTurma).getPlano().getBibliografia().containsKey(idMaterial)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void addMaterial(String codigoTurma, String idMaterial, String titulo, String autor, String ano, String isbn){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.addMaterial(idMaterial, titulo, autor, ano, isbn);
+            }
+        }
+    }
+    public void excluirMaterial(String codigoTurma, String idMaterial){
+        Professor prof = (Professor) usuarioAutenticado;
+        if (prof.getTurmas() != null){
+            if(prof.getTurmas().get(codigoTurma) != null){
+                PlanoDeEnsino plano = prof.getTurmas().get(codigoTurma).getPlano();
+                plano.excluirMaterial(idMaterial);
+            }
+        }
+    }
 }
