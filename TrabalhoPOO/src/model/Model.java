@@ -188,6 +188,24 @@ public class Model {
         return false;
     }
 
+
+    public boolean cadastrarEmenta(String justificativa, String ementa, String[] objetivos,
+                                   String metodologia, String[] atividades,
+                                   String sistemaAvaliacao, String nomeProfessor) {
+        if (justificativa == null || justificativa.trim().isEmpty() ||
+                ementa == null || ementa.trim().isEmpty() ||
+                objetivos == null || objetivos.length == 0 ||
+                metodologia == null || metodologia.trim().isEmpty() ||
+                atividades == null || atividades.length == 0 ||
+                sistemaAvaliacao == null || sistemaAvaliacao.trim().isEmpty() ||
+                nomeProfessor == null || nomeProfessor.trim().isEmpty()) {
+            return false;
+        }
+        Professor professor = (Professor) usuarioAutenticado;
+        professor.getTurmas()
+
+        return true;
+    }
     public boolean cadastrarTurma(String idProfessor, String codigoTurma, String codigoDisciplina, String nomeUnidade, String nomeDisciplina,
                                   String caraterDisciplina, String regimeOferta, String estruturaCurricular,
                                   int cargaHoraria) {
