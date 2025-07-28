@@ -55,7 +55,7 @@ public class MaterialEstudo {
         if(idMaterial == null) {
             return "";
         }
-        String s = String.format("Título: %s | Autor: %s\nAno: %s | ISBN: %s", getIdMaterial(), getTitulo(), getAutor(), getAno(), getIsbn());
+        String s = String.format("Título: %s | Autor: %s\nAno: %s | ISBN: %s", getTitulo(), getAutor(), getAno(), getIsbn());
         return s;
     }
 }
