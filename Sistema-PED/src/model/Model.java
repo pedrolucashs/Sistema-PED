@@ -327,7 +327,10 @@ public class Model {
                 Professor prof = (Professor) usuarioAutenticado;
                 if (prof.getTurmas() != null){
                     String resultado = "";
+                    resultado += "\n";
                     resultado += prof.getTurmas().get(codigoTurma).toString();
+                    resultado += "\n";
+                    return resultado;
                 }
             }
         }
